@@ -6,7 +6,7 @@
   <link href="http://emilycodeee.github.io/atom.xml" rel="self"/>
   
   <link href="http://emilycodeee.github.io/"/>
-  <updated>2022-03-27T02:40:32.350Z</updated>
+  <updated>2022-03-27T07:32:55.393Z</updated>
   <id>http://emilycodeee.github.io/</id>
   
   <author>
@@ -21,18 +21,31 @@
     <link href="http://emilycodeee.github.io/test/"/>
     <id>http://emilycodeee.github.io/test/</id>
     <published>2022-03-27T02:40:32.000Z</published>
-    <updated>2022-03-27T02:40:32.350Z</updated>
+    <updated>2022-03-27T07:32:55.393Z</updated>
     
-    <content type="html"><![CDATA[<p>__此文作者__：Emily codeee Chen<br />__此文地址__： <a href="http://emilycodeee.github.io/test/">http://emilycodeee.github.io/test/</a> <br />__版權聲明__：本博客所有文章除特別聲明外，均採用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/tw/">CC BY-NC-SA 3.0 TW</a> 許可協議。轉載請註明出處！</p>]]></content>
+    <content type="html"><![CDATA[<p>imrmo</p>]]></content>
     
     
       
       
-    <summary type="html">&lt;p&gt;__此文作者__：Emily codeee Chen&lt;br /&gt;__此文地址__： &lt;a href=&quot;http://emilycodeee.github.io/test/&quot;&gt;http://emilycodeee.github.io/test/&lt;/a&gt; &lt;br /&gt;__版權聲</summary>
+    <summary type="html">&lt;p&gt;imrmo&lt;/p&gt;
+</summary>
       
     
     
     
+    <category term="Diary" scheme="http://emilycodeee.github.io/categories/Diary/"/>
+    
+    <category term="PlayStation" scheme="http://emilycodeee.github.io/categories/Diary/PlayStation/"/>
+    
+    <category term="Games" scheme="http://emilycodeee.github.io/categories/Diary/Games/"/>
+    
+    <category term="Life" scheme="http://emilycodeee.github.io/categories/Life/"/>
+    
+    
+    <category term="t1" scheme="http://emilycodeee.github.io/tags/t1/"/>
+    
+    <category term="t2" scheme="http://emilycodeee.github.io/tags/t2/"/>
     
   </entry>
   
