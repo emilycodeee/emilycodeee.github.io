@@ -20,26 +20,35 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"emilycodeee.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="你不會成為你設定的目標\n而是回歸到你遵循的系統">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Emily is coding...">
-<meta property="og:url" content="http://emilycodeee.github.io/index.html">
+    <meta name="description" content="Vue &amp; React 初開發比較與心得📌 前言既先前以 React 開發個人專案後，最近因為新工作需要使用 Vue ，所以轉而學習 Vue 開發，在這篇文章中會記錄我所感受與理解的 React 與 Vue 之間的差別。 📌 Vue 與 React 的共通點 都是用於建立 UI 的 JavaScript 庫 都使用 Virtual Dom 都實踐 Component Base 的架構模">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【初學印象】Vue &amp; React 初開發比較與心得">
+<meta property="og:url" content="http://emilycodeee.github.io/%E3%80%90%E5%88%9D%E5%AD%B8%E5%8D%B0%E8%B1%A1%E3%80%91Vue/index.html">
 <meta property="og:site_name" content="Emily is coding...">
-<meta property="og:description" content="你不會成為你設定的目標\n而是回歸到你遵循的系統">
+<meta property="og:description" content="Vue &amp; React 初開發比較與心得📌 前言既先前以 React 開發個人專案後，最近因為新工作需要使用 Vue ，所以轉而學習 Vue 開發，在這篇文章中會記錄我所感受與理解的 React 與 Vue 之間的差別。 📌 Vue 與 React 的共通點 都是用於建立 UI 的 JavaScript 庫 都使用 Virtual Dom 都實踐 Component Base 的架構模">
 <meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://i.imgur.com/n8YtJI0.png">
+<meta property="og:image" content="https://i.imgur.com/LnpYA3U.png">
+<meta property="og:image" content="https://i.imgur.com/63RCuYp.png">
+<meta property="og:image" content="https://i.imgur.com/yoe7ngJ.png">
+<meta property="article:published_time" content="2022-03-27T10:29:38.000Z">
+<meta property="article:modified_time" content="2022-03-27T10:32:38.319Z">
 <meta property="article:author" content="Emily Chen">
-<meta property="article:tag" content="前端,MVC,Javascript,Vue,React,Flutter">
+<meta property="article:tag" content="vue">
+<meta property="article:tag" content="react">
+<meta property="article:tag" content="前端">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/n8YtJI0.png">
 
 
-<link rel="canonical" href="http://emilycodeee.github.io/">
+<link rel="canonical" href="http://emilycodeee.github.io/%E3%80%90%E5%88%9D%E5%AD%B8%E5%8D%B0%E8%B1%A1%E3%80%91Vue/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-TW","comments":"","permalink":"","path":"index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://emilycodeee.github.io/%E3%80%90%E5%88%9D%E5%AD%B8%E5%8D%B0%E8%B1%A1%E3%80%91Vue/","path":"【初學印象】Vue/","title":"【初學印象】Vue & React 初開發比較與心得"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Emily is coding...</title>
+<title>【初學印象】Vue & React 初開發比較與心得 | Emily is coding...</title>
   
 
 
@@ -70,7 +79,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Emily is coding...</h1>
+      <p class="site-title">Emily is coding...</p>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">typing...</p>
@@ -103,7 +112,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目錄
@@ -116,6 +125,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Vue-amp-React-%E5%88%9D%E9%96%8B%E7%99%BC%E6%AF%94%E8%BC%83%E8%88%87%E5%BF%83%E5%BE%97"><span class="nav-number">1.</span> <span class="nav-text">Vue &amp; React 初開發比較與心得</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8C-%E5%89%8D%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">📌 前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8C-Vue-%E8%88%87-React-%E7%9A%84%E5%85%B1%E9%80%9A%E9%BB%9E"><span class="nav-number">1.2.</span> <span class="nav-text">📌 Vue 與 React 的共通點</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8C-Vue-%E8%88%87-React-%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3%E7%9A%84%E4%B8%8D%E5%90%8C"><span class="nav-number">1.3.</span> <span class="nav-text">📌 Vue 與 React 核心思想的不同</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8C-%E7%8B%80%E6%85%8B%E6%95%B8%E6%93%9A%E7%B6%81%E5%AE%9A%E7%9A%84%E4%B8%8D%E5%90%8C"><span class="nav-number">1.4.</span> <span class="nav-text">📌 狀態數據綁定的不同</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-%E9%9B%99%E5%90%91%E7%B6%81%E5%AE%9A-v-s-React-%E5%96%AE%E5%90%91%E7%B6%81%E5%AE%9A"><span class="nav-number">1.4.1.</span> <span class="nav-text">Vue 雙向綁定 v.s React 單向綁定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Push-based%EF%BC%9AVue"><span class="nav-number">1.4.2.</span> <span class="nav-text">Push-based：Vue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pull-based%EF%BC%9AReact"><span class="nav-number">1.4.3.</span> <span class="nav-text">Pull-based：React</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8C-%E7%9B%A3%E8%81%BD%E8%B3%87%E6%96%99%E8%AE%8A%E5%8C%96%E8%88%87%E6%B8%B2%E6%9F%93%E9%81%8E%E7%A8%8B%E7%9A%84%E4%B8%8D%E5%90%8C"><span class="nav-number">1.5.</span> <span class="nav-text">📌 監聽資料變化與渲染過程的不同</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue"><span class="nav-number">1.5.1.</span> <span class="nav-text">Vue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React"><span class="nav-number">1.5.2.</span> <span class="nav-text">React</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8C-%E7%94%9F%E5%91%BD%E9%80%B1%E6%9C%9F-hook"><span class="nav-number">1.6.</span> <span class="nav-text">📌 生命週期 hook</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-Lifecycle"><span class="nav-number">1.6.1.</span> <span class="nav-text">Vue Lifecycle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-Lifecycle"><span class="nav-number">1.6.2.</span> <span class="nav-text">React Lifecycle</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8C-diff-%E7%9A%84%E7%AE%97%E6%B3%95%E4%B8%8D%E5%90%8C"><span class="nav-number">1.7.</span> <span class="nav-text">📌 diff 的算法不同</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#React-%E7%9A%84-Diff-%E7%AE%97%E6%B3%95%E6%A0%B8%E5%BF%83%E5%AF%A6%E7%8F%BE"><span class="nav-number">1.7.1.</span> <span class="nav-text">React 的 Diff 算法核心實現</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-%E7%9A%84-Diff-%E7%AE%97%E6%B3%95%E6%A0%B8%E5%BF%83%E5%AF%A6%E7%8F%BE"><span class="nav-number">1.7.2.</span> <span class="nav-text">Vue 的 Diff 算法核心實現</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8C-%E6%95%B8%E6%93%9A%E6%B5%81%E5%90%91%E8%88%87%E5%82%B3%E9%81%9E%E4%B8%8D%E5%90%8C-Event-v-s-Callback"><span class="nav-number">1.8.</span> <span class="nav-text">📌 數據流向與傳遞不同 Event v.s Callback</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-1"><span class="nav-number">1.8.1.</span> <span class="nav-text">Vue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-1"><span class="nav-number">1.8.2.</span> <span class="nav-text">React</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8C-%E4%BA%8B%E4%BB%B6%E6%A9%9F%E5%88%B6%E7%9A%84%E4%B8%8D%E5%90%8C"><span class="nav-number">1.9.</span> <span class="nav-text">📌 事件機制的不同</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-2"><span class="nav-number">1.9.1.</span> <span class="nav-text">Vue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-2"><span class="nav-number">1.9.2.</span> <span class="nav-text">React</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8C-%E6%A1%86%E6%9E%B6%E6%9C%AC%E8%B3%AA%E7%9A%84%E4%B8%8D%E5%90%8C"><span class="nav-number">1.10.</span> <span class="nav-text">📌 框架本質的不同</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8C-%E5%80%8B%E4%BA%BA%E6%84%9F%E5%8F%97%E5%B0%8F%E7%B5%90"><span class="nav-number">1.11.</span> <span class="nav-text">📌 個人感受小結</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-%E7%9A%84%E5%84%AA%E5%8B%A2"><span class="nav-number">1.11.1.</span> <span class="nav-text">Vue 的優勢</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-%E7%9A%84%E5%84%AA%E5%8B%A2"><span class="nav-number">1.11.2.</span> <span class="nav-text">React 的優勢</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8C-%E5%8F%83%E8%80%83%E8%B3%87%E6%BA%90"><span class="nav-number">1.12.</span> <span class="nav-text">📌 參考資源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8C-%E5%BB%B6%E4%BC%B8%E9%96%B1%E8%AE%80"><span class="nav-number">1.13.</span> <span class="nav-text">📌 延伸閱讀</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -187,16 +197,17 @@
 </noscript>
 
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://emilycodeee.github.io/%E3%80%90%E5%88%9D%E5%AD%B8%E5%8D%B0%E8%B1%A1%E3%80%91Vue/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -210,13 +221,13 @@
     </span>
     
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Emily is coding...">
+      <meta itemprop="name" content="【初學印象】Vue & React 初開發比較與心得 | Emily is coding...">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/%E3%80%90%E5%88%9D%E5%AD%B8%E5%8D%B0%E8%B1%A1%E3%80%91Vue/" class="post-title-link" itemprop="url">【初學印象】Vue & React 初開發比較與心得</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          【初學印象】Vue & React 初開發比較與心得
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -261,7 +272,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Vue-amp-React-初開發比較與心得"><a href="#Vue-amp-React-初開發比較與心得" class="headerlink" title="Vue &amp; React 初開發比較與心得"></a>Vue &amp; React 初開發比較與心得</h1><h2 id="📌-前言"><a href="#📌-前言" class="headerlink" title="📌 前言"></a>📌 前言</h2><p>既先前以 React 開發個人專案後，最近因為新工作需要使用 Vue ，所以轉而學習 Vue 開發，在這篇文章中會記錄我所感受與理解的 React 與 Vue 之間的差別。</p>
+        <h1 id="Vue-amp-React-初開發比較與心得"><a href="#Vue-amp-React-初開發比較與心得" class="headerlink" title="Vue &amp; React 初開發比較與心得"></a>Vue &amp; React 初開發比較與心得</h1><h2 id="📌-前言"><a href="#📌-前言" class="headerlink" title="📌 前言"></a>📌 前言</h2><p>既先前以 React 開發個人專案後，最近因為新工作需要使用 Vue ，所以轉而學習 Vue 開發，在這篇文章中會記錄我所感受與理解的 React 與 Vue 之間的差別。</p>
 <h2 id="📌-Vue-與-React-的共通點"><a href="#📌-Vue-與-React-的共通點" class="headerlink" title="📌 Vue 與 React 的共通點"></a>📌 Vue 與 React 的共通點</h2><ul>
 <li>都是用於建立 UI 的 JavaScript 庫</li>
 <li>都使用 Virtual Dom</li>
@@ -374,7 +385,6 @@
 <li><a target="_blank" rel="noopener" href="https://github.com/creeperyang/blog/issues/33">解析 snabbdom 源码，教你实现精简的 Virtual DOM 库</a></li>
 </ul>
 
-      
     </div>
 
     
@@ -382,264 +392,27 @@
     
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+          <div class="post-tags">
+              <a href="/tags/vue/" rel="tag"># vue</a>
+              <a href="/tags/react/" rel="tag"># react</a>
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/title/" rel="prev" title="title">
+                  <i class="fa fa-chevron-left"></i> title
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
     </footer>
   </article>
 </div>
 
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://emilycodeee.github.io/title/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/ava.png">
-      <meta itemprop="name" content="Emily Chen">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Emily is coding...">
-      <meta itemprop="description" content="你不會成為你設定的目標\n而是回歸到你遵循的系統">
-    </span>
-    
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Emily is coding...">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/title/" class="post-title-link" itemprop="url">title</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-
-      <time title="創建時間：2022-03-27 18:29:20" itemprop="dateCreated datePublished" datetime="2022-03-27T18:29:20+08:00">2022-03-27</time>
-      <div>
-      <span class="post-count">本文共0字</span>
-      <span class="post-count">閱讀時長約1分鐘</span>
-      </div>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://emilycodeee.github.io/test/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/ava.png">
-      <meta itemprop="name" content="Emily Chen">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Emily is coding...">
-      <meta itemprop="description" content="你不會成為你設定的目標\n而是回歸到你遵循的系統">
-    </span>
-    
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Emily is coding...">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/test/" class="post-title-link" itemprop="url">test</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-      
-
-      <time title="創建時間：2022-03-27 10:40:32 / 修改時間：15:32:55" itemprop="dateCreated datePublished" datetime="2022-03-27T10:40:32+08:00">2022-03-27</time>
-      <div>
-      <span class="post-count">本文共1字</span>
-      <span class="post-count">閱讀時長約1分鐘</span>
-      </div>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分類於</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Diary/" itemprop="url" rel="index"><span itemprop="name">Diary</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Diary/PlayStation/" itemprop="url" rel="index"><span itemprop="name">PlayStation</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Diary/Games/" itemprop="url" rel="index"><span itemprop="name">Games</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Life/" itemprop="url" rel="index"><span itemprop="name">Life</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>imrmo</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://emilycodeee.github.io/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/ava.png">
-      <meta itemprop="name" content="Emily Chen">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Emily is coding...">
-      <meta itemprop="description" content="你不會成為你設定的目標\n而是回歸到你遵循的系統">
-    </span>
-    
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Emily is coding...">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">發表於</span>
-
-      <time title="創建時間：2022-03-27 09:07:21" itemprop="dateCreated datePublished" datetime="2022-03-27T09:07:21+08:00">2022-03-27</time>
-      <div>
-      <span class="post-count">本文共132字</span>
-      <span class="post-count">閱讀時長約1分鐘</span>
-      </div>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-<p>__此文作者__：Emily codeee Chen<br />__此文地址__： <a href="http://emilycodeee.github.io/hello-world/">http://emilycodeee.github.io/hello-world/</a> <br />__版權聲明__：本博客所有文章除特別聲明外，均採用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/3.0/tw/">CC BY-NC-SA 3.0 TW</a> 許可協議。轉載請註明出處！</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
 
 
 
