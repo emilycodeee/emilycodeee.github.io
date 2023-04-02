@@ -1,10 +1,9 @@
 ---
 title: JS#2：JavaScript引擎與JavaScript的運行環境 ─ 什麼？JavaScript早就不只是直譯式語言了？！
 date: 2022-08-05 21:52:57
-tags:
-  - 前端
-categories:
-  - [Javascript]
+tags: ["前端", "javascript"]
+# categories:
+#   - [Javascript]
 ---
 
 ![](bhs2.jpeg)

@@ -1,10 +1,9 @@
 ---
 title: JS#5：優先認可 變數提升Hoisting？暫時死區(Temporal Dead Zone) ─ const、let、var 的小祕密
 date: 2022-08-06 11:40:49
-tags:
-  - 前端
-categories:
-  - [Javascript]
+tags: ["前端", "javascript"]
+# categories:
+#   - [Javascript]
 ---
 
 ![](./JS-5/bhs5.jpeg)

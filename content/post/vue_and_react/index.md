@@ -1,13 +1,10 @@
 ---
 title: 【前端框架】Vue & React 初開發比較與心得
 date: 2022-03-27 18:29:38
-tags:
-  - vue
-  - react
-  - 前端
-categories:
-  - [前端框架, React]
-  - [前端框架, Vue]
+tags: ["vue", "react","前端"]
+# categories:
+#   - [前端框架, React]
+#   - [前端框架, Vue]
 ---
 
 **前言**

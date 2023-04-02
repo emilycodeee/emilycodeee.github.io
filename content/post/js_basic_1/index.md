@@ -1,10 +1,8 @@
 ---
 title: JS#1：JavaScript運作原理 ─ 深入研究之前，先了解全局
 date: 2022-08-04 21:26:41
-tags:
-  - 前端
-categories:
-  - [Javascript]
+tags: ["前端", "javascript"]
+# categories: ["Javascript"]
 # image: "/posts_img/JS-1/js1-1.jpeg"
 ---
 

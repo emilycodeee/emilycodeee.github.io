@@ -28,8 +28,8 @@ params:
   algolia_appId: ''
   algolia_indexName: ''
   algolia_apiKey: ''
-  sidebar_about_description: 'Software Developer, Open Source Enthusiast and Life Adventurer'
-  sidebar_avatar: img/zhaohuabing.png
+  sidebar_about_description: 'Front-End Developer and Life Adventurer'
+  # sidebar_avatar: img/emily.jpg
   featured_tags: true
   featured_condition_size: 1
   ba_track_id: ''
