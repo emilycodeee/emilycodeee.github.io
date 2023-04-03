@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Emily is coding">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://emilycodeee.github.io//img/sky.jpg">
+    <meta property="twitter:image" content="https://emilycodeee.github.io//img/sky.jpg" />
+    
+
+    
+    <meta name="title" content="【前端框架】Vue &amp; React 初開發比較與心得" />
+    <meta property="og:title" content="【前端框架】Vue &amp; React 初開發比較與心得" />
+    <meta property="twitter:title" content="【前端框架】Vue &amp; React 初開發比較與心得" />
+    
+
+    
+    <meta name="description" content="">
+    <meta property="og:description" content="" />
+    <meta property="twitter:description" content="" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>【前端框架】Vue &amp; React 初開發比較與心得 | Emilydondon Blog</title>
+
+    <link rel="canonical" href="/post/vue_and_react/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Emily is coding</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/life/">life</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tech/">tech</a>
+                        </li>
+                        
+                    
+                    
+		    
+		            <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		           </li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/sky.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/vue" title="vue">
+                            vue
+                        </a>
+                        
+                        <a class="tag" href="/tags/react" title="react">
+                            react
+                        </a>
+                        
+                        <a class="tag" href="/tags/%E5%89%8D%E7%AB%AF" title="前端">
+                            前端
+                        </a>
+                        
+                    </div>
+                    <h1>【前端框架】Vue &amp; React 初開發比較與心得</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                    Emily is coding
+                             
+                            on 
+                            Sunday, March 27, 2022
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <p><strong>前言</strong></p>
+<p>既先前以 React 開發個人專案後，最近因為新工作需要使用 Vue ，所以轉而學習 Vue 開發，在這篇文章中會記錄我所感受與理解的 React 與 Vue 之間的差別。</p>
+<h2 id="-vue-與-react-的共通點">📌 Vue 與 React 的共通點</h2>
+<ul>
+<li>都是用於建立 UI 的 JavaScript 庫</li>
+<li>都使用 Virtual Dom</li>
+<li>都實踐 Component Base 的架構模式</li>
+<li>都可以放入個別 HTML 檔案中，也可以用為更複雜的 Webpack 設定中的一個模組。</li>
+<li>都是單向資訊流</li>
+<li>都有個別的路由與狀態管理庫</li>
+</ul>
+<p>其實上述幾點列出來，也是最近的學習感受，本質來說兩個框架幾乎是一樣的，只是差別在於兩個框架使用的設計思考。</p>
+<blockquote>
+<p>在寫 Vue 的時候，每個組件就像在寫一個完整的 HTML + JavaScript + CSS。
+在寫 React 的時候，其實很大程度會感覺自己就是在寫 JavaScript。</p>
+</blockquote>
+<h2 id="-vue-與-react-核心思想的不同">📌 Vue 與 React 核心思想的不同</h2>
+<p>Vue 主打靈活易用的漸進式框架，也就是希望降低前端開發的門檻，因此很多人說 Vue 是目前三大框架中學習曲線最平緩的。而 Vue 的作者尤雨溪也曾如此回答：</p>
+<blockquote>
+<p>「Vue 使用的是 web 开发者更熟悉的模板与特性，Vue 的 API 跟传统 web 开发者熟悉的模板契合度更高，比如 Vue 的单文件组件是以模板 + JavaScript + CSS 的组合模式呈现，它跟 web 现有的 HTML、JavaScript、CSS 能够更好地配合。React 的特色在于函数式编程的理念和丰富的技术选型。Vue 比起 React 更容易被前端工程师接受，这是一个直观的感受；React 则更容易吸引在 FP 上持续走下去的开发者。」</p>
+</blockquote>
+<p>Vue 原先的定位是盡可能降低前端開發的門檻，也因此可以從這個出發點理解為什麼 Vue 推崇所謂的<code>漸進式開發體驗</code>，對於一個初學前端開發的開發者而言，數據可變動、雙向綁定，每個組件都包含 html(template)、javascript、css 等，其實與既有的所謂<code>經典web開發方式</code>所差無幾，也就相對而言較好理解與學習。這個核心價值的開展也或許可以歸結到尤雨溪本身是獨立開發者。</p>
+<p>React 早期的口號是 <code>Rethinking Best Practices</code>。開宗明義地表示要用更好的方式去顛覆前端開發（在當時 jQuery 稱霸的時空背景下，現在看來確實完美顛覆了）。而在 React 中推崇函式編程(FP)，其中包含數據不可變及單向資訊流等，在 Pure Function 的原則下，最大優點當然就是所謂的穩定性（沒有 side effect）及可測試／維護性（同樣的 input，必得到同樣的 output），而這也是為什麼 React 更適合大型、複雜應用的原因。</p>
+<p>在寫 Vue 時，會有 template、css、script 三個區塊組合，就像我們最開始在學習網頁開發時的 html、css、js 一樣。在 Vue 的官方文件中，也提到如此的設計思想是為了擁抱經典的 Web 開發技術。</p>
+<p><strong>Vue Component</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#ff79c6">template</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#ff79c6">form</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#ff79c6">label</span>&gt;Email:&lt;/<span style="color:#ff79c6">label</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;email&#34;</span> <span style="color:#50fa7b">required</span> <span style="color:#50fa7b">v-model</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;email&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#ff79c6">label</span>&gt;Password:&lt;/<span style="color:#ff79c6">label</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#ff79c6">input</span> <span style="color:#50fa7b">type</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;password&#34;</span> <span style="color:#50fa7b">required</span> <span style="color:#50fa7b">v-model</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;password&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#ff79c6">label</span>&gt;Role:&lt;/<span style="color:#ff79c6">label</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#ff79c6">form</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#ff79c6">template</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#ff79c6">script</span>&gt;
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">export</span> <span style="color:#ff79c6">default</span> {
+</span></span><span style="display:flex;"><span>    name<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;Form&#39;</span>,
+</span></span><span style="display:flex;"><span>    data() {
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">return</span> {
+</span></span><span style="display:flex;"><span>        email<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;sss&#39;</span>,
+</span></span><span style="display:flex;"><span>        password<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;&#39;</span>,
+</span></span><span style="display:flex;"><span>        role<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;&#39;</span>,
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#ff79c6">script</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#ff79c6">style</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&lt;!</span><span style="color:#ff79c6">--</span> <span style="color:#ff79c6">component</span> <span style="color:#ff79c6">style</span> <span style="color:#ff79c6">--</span><span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#ff79c6">style</span>&gt;
+</span></span></code></pre></div><p>相較 Vue 的經典，在 React 中，一切都是 JavaScript 為基底，就連 HTML 都以 JSX 來表達(HTML in JS)，尤其搭配上 styled-components 時，基本上就感覺自己從來沒離開過 JavaScript 。</p>
+<p><strong>React Component</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff79c6">const</span> Form <span style="color:#ff79c6">=</span> () =&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">const</span> [email, setEmail] <span style="color:#ff79c6">=</span> useState(<span style="color:#f1fa8c">&#39;&#39;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">const</span> [password, setPassword] <span style="color:#ff79c6">=</span> useState(<span style="color:#f1fa8c">&#39;&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">return</span> (
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;</span>form<span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">&lt;</span>label<span style="color:#ff79c6">&gt;</span>Email<span style="color:#ff79c6">:&lt;</span>/label&gt;
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">&lt;</span>input type<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;email&#34;</span> required value<span style="color:#ff79c6">=</span>{email} <span style="color:#ff79c6">/&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">&lt;</span>label<span style="color:#ff79c6">&gt;</span>Password<span style="color:#ff79c6">:&lt;</span>/label&gt;
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">&lt;</span>input type<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;password&#34;</span> required value<span style="color:#ff79c6">=</span>{password} <span style="color:#ff79c6">/&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">&lt;</span>label<span style="color:#ff79c6">&gt;</span>Role<span style="color:#ff79c6">:&lt;</span>/label&gt;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&lt;</span>/form&gt;
+</span></span><span style="display:flex;"><span>  )
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="-狀態數據綁定的不同">📌 狀態數據綁定的不同</h2>
+<p><strong>Vue 雙向綁定 v.s React 單向綁定</strong></p>
+<p>或許這也可以說是兩者間最大的區別，Vue 提供反應式的數據，也就是當我們使用 v-model 將數據連動時，只要數據有所改動，介面就會自動更新，而在 React 中，我們則需要透過 <code>onChange</code> 或 <code>setState</code> 方法來完成這件事。Vue 的作者尤雨溪將這兩者說明為<code>Push-based</code> 和 <code>Pull-based</code>。</p>
+<p><strong>Push-based：Vue</strong></p>
+<p>改動數據後，數據本身會把這個改動推送出去，告知渲染系統進行畫面渲染。</p>
+<p><strong>Pull-based：React</strong></p>
+<p>我們需要額外主動去通知系統「你該進行渲染」，這時系統才會幫我們渲染畫面。</p>
+<h2 id="-監聽資料變化與渲染過程的不同">📌 監聽資料變化與渲染過程的不同</h2>
+<p>
+  <img src="https://i.imgur.com/n8YtJI0.png" alt="">
+
+</p>
+<p><strong>Vue</strong></p>
+<ul>
+<li>依賴收集，自動優化，數據可變。</li>
+<li>遞迴監聽 data 的所有屬性，可以直接修改。</li>
+<li>當數據改變時，自動找到引用組件重新渲染。</li>
+</ul>
+<p><strong>React</strong></p>
+<ul>
+<li>基於資料狀態，手動優化，數據不可變。</li>
+<li>需透過 onChange 或 setState 等方法進行修改</li>
+<li>以組件為根目錄，預設為全部重新渲染。</li>
+</ul>
+<p>在 React 當某個組件的狀態發生變化的時候，會以該組件為根，重新渲染整個子組件，因此在寫 React 時，我們常會思考是不是會造成不必要的子組件渲染，因此就需要在所有可能的地方使用 PureComponent，或是手動實現 shouldComponentUpdate 方法，但如此一來，我們也就必須保證該組件的整個子組件渲染輸出的影響都是由該組件的 props 所決定，不然就可能導致例外且難以察覺的渲染結果不一致，導致在組件優化的考量上，會耗費比較多心力。</p>
+<p>但在 Vue 中，因為組件的依賴引用在渲染過程中是<code>自動追蹤</code>，所以系統精確知道哪些組件需要被重新渲染，我們可以簡單理解為在 Vue 中的每個組件都自動獲得 shouldComponentUpdate ，因此在 Vue 開發而言，這個特點讓開發者相較不需要考量這一類的效能優化問題，而能更加專注於開發工作。</p>
+<p>更清楚地說 Vue 之所以可以更快地計算出 Virtual DOM 的差異，是因為它在渲染過程中，會追蹤每一個元件的依賴關係（透過 getter/setter 等），不需要重新渲染整個元件樹，而 React 則是透過引用比較的方式(diff)，因此如果開發不注意可能會導致大量且不必要的 VDOM 重新渲染，談到這裡可能會好奇，怎麼 React 不跟著監聽資料就好？</p>
+<p>這就要回歸到最源頭的兩個框架設計理念的區別，Vue 資料的「可變」，與 React 資料的「不可變」，而這兩者也其實沒有真實所謂的優劣之分，Vue 在這點上可以說是開發更簡單，但 React 則是在建構大型應用的時候，能更好的維護。</p>
+<h2 id="-生命週期-hook">📌 生命週期 hook</h2>
+<p>承上，Vue 中的組件也與 React 一樣，有所謂類似生命週期的方法，例如當組件就緒，掛載到頁面之前 (created)，掛載到頁面時(mounted)、狀態更新時(updated)、組件撤銷時(unmounted)等 hook，而兩者最大的差別在於先前說的，Vue 本身是具有反應系統的，也就是已經預設了 shouldComponentUpdate ，所以在 Vue 裡當然就不需要它。</p>
+<p><strong>Vue Lifecycle</strong></p>
+<p>
+  <img src="https://i.imgur.com/LnpYA3U.png" alt="">
+
+</p>
+<p><strong>React Lifecycle</strong></p>
+<p>
+  <img src="https://i.imgur.com/63RCuYp.png" alt="">
+
+</p>
+<h2 id="-diff-的算法不同">📌 diff 的算法不同</h2>
+<p>Vue 與 React 在實踐 Virtual Dom 的方法是相當類似的，都是基於以下兩點，將傳統 Diff 算法從 O(n³) 降為 O(n)。</p>
+<ul>
+<li>不同的組件產生不同的 DOM 結構物件。</li>
+<li>當 type 不相同時，對應 DOM 操作就是直接刪除舊的 DOM ，建新的 DOM。</li>
+<li>同一層級的子節點透過唯一的 key 來做為區分基礎。</li>
+</ul>
+<p><strong>React 的 Diff 算法核心實現</strong></p>
+<ol>
+<li>首先對新集合進行遍歷，for( name in nextChildren)</li>
+<li>通過唯一 key 來判斷老集合中是否存在相同的節點。如果沒有的話創建</li>
+<li>如果有的話，if (preChild === nextChild )
+<ul>
+<li>在新集合中的位置和在舊集合中 lastIndex 進行比較</li>
+<li>如果 if (child._mountIndex &lt; lastIndex) 進行移動操作，否則不進行移動操作</li>
+</ul>
+</li>
+<li>如果遍歷的過程中發現在新集合中沒有，但在老集合中有的節點，會進行刪除操作</li>
+</ol>
+<p><strong>Vue 的 Diff 算法核心實現</strong></p>
+<p>updateChildren 是 vue diff 的核心，過程可以概括爲：</p>
+<p>舊 children 和新 children 各有兩個頭尾的變量 StartIdx 和 EndIdx，它們的 2 個變量相互比較，一共有 4 種比較方式。</p>
+<p>如果 4 種比較都沒匹配如果設置了 key，就會用 key 進行比較，在比較的過程中，變量會往中間靠，一旦 StartIdx &gt; EndIdx 表明舊 children 和新 children 至少有一個已經遍歷完了，就會結束比較。</p>
+<p>Vue 是基於 snabbdom 庫，採用雙端比較的 diff 算法，同時從新舊 children 的兩端開始進行比較，藉助 key 值找到可複用的節點，再進行相關操作。也就是說 Vue Diff 是採用<code>邊比較、邊更新</code>，而 React 則是使用 diff 對列保存需要更新那些 DOM ，<code>算出 patch 樹後，在統一操作批量更新 DOM</code>，兩相比較下， Vue 可以減少移動節點次數，減少不必要的性能損耗，更加的優雅。</p>
+<h2 id="-數據流向與傳遞不同-event-vs-callback">📌 數據流向與傳遞不同 Event v.s Callback</h2>
+<p>
+  <img src="https://i.imgur.com/yoe7ngJ.png" alt="">
+
+</p>
+<p><strong>Vue</strong></p>
+<ul>
+<li>父元件透過 props 向子元件傳遞資料或者 callback，但一般只傳遞資料。</li>
+<li>子元件透過自定義事件(custom event)向父元件傳遞資料。（實現方式類似於父層監聽子層的事件變化）</li>
+<li>以 provide/inject 來實現父元件向子元件跨多層級的資料傳遞。</li>
+</ul>
+<p><strong>React</strong></p>
+<ul>
+<li>與 Vue 一樣，父元件透過 props 向子元件傳遞資料或者 callback。</li>
+<li>透過 context 進行跨層級的資料傳遞，和 provide/inject 作用差不多。</li>
+<li>React 本身並不支援自定義事件。</li>
+</ul>
+<p>Vue 與 React 都有方式可以輾轉達到子層項父層傳遞訊息，但 Vue 傾向於自定義事件(custom event)傳遞，而 React 則是使用回調函式。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#6272a4">// custom event emit 範例
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">//子
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">export</span> <span style="color:#ff79c6">default</span> {
+</span></span><span style="display:flex;"><span>  data() {
+</span></span><span style="display:flex;"><span>   ...
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  props<span style="color:#ff79c6">:</span> [<span style="color:#f1fa8c">&#34;delay&#34;</span>],
+</span></span><span style="display:flex;"><span>  methods<span style="color:#ff79c6">:</span> {
+</span></span><span style="display:flex;"><span>    stopTimer() {
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">this</span>.$emit(<span style="color:#f1fa8c">&#34;end&#34;</span>, <span style="color:#ff79c6">this</span>.reactionTime);
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">//定義 event名稱,放入要傳遞的變數
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    },
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">//父
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">&lt;</span>template<span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&lt;</span>Block v<span style="color:#ff79c6">-</span><span style="color:#ff79c6">if</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;isPlaying&#34;</span> <span style="color:#ff79c6">:</span>delay<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;delay&#34;</span> @end<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;stopGame&#34;</span> <span style="color:#ff79c6">/&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">//觸發custom event時，會觸發父層method
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>  <span style="color:#ff79c6">&lt;</span>div v<span style="color:#ff79c6">-</span><span style="color:#ff79c6">if</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;showResult&#34;</span><span style="color:#ff79c6">&gt;</span>spent {{ reactionTime }}<span style="color:#ff79c6">&lt;</span>/div&gt;
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;</span>/template&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;</span>script<span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> Block from <span style="color:#f1fa8c">&#34;./components/Block.vue&#34;</span>;
+</span></span><span style="display:flex;"><span>Block;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">export</span> <span style="color:#ff79c6">default</span> {
+</span></span><span style="display:flex;"><span>  name<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#34;App&#34;</span>,
+</span></span><span style="display:flex;"><span>  components<span style="color:#ff79c6">:</span> { Block },
+</span></span><span style="display:flex;"><span>  data() {
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  methods<span style="color:#ff79c6">:</span> {
+</span></span><span style="display:flex;"><span>    stopGame(time) {
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">//透過event emit定義的custom event
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	<span style="color:#6272a4">//在觸發時會自動傳入所傳遞的參數
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>      <span style="color:#ff79c6">this</span>.reactionTime <span style="color:#ff79c6">=</span> time;
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">this</span>.isPlaying <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">false</span>;
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">this</span>.showResult <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">true</span>;
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">&lt;</span>/script&gt;
+</span></span></code></pre></div><h2 id="-事件機制的不同">📌 事件機制的不同</h2>
+<p><strong>Vue</strong></p>
+<ul>
+<li>原生事件使用標準 web 事件，（例 CustomEvent 也是其一種）。</li>
+<li>具有自定義事件(custom event)，讓父組件可以實踐對子組件的監聽。</li>
+<li>利用 snabbdom 庫的模組插件。</li>
+</ul>
+<p><strong>React</strong></p>
+<p>原生事件經過包裝，所有事件會先冒泡到頂層 document 監聽後，才合成事件向下傳遞，因此可以跨端使用事件機制，而不是經過 web dom 的強綁定。父子間都是透過 props 做為資料傳遞，並無向上傳遞。</p>
+<h2 id="-框架本質的不同">📌 框架本質的不同</h2>
+<p>Vue 本質是 MVVM 框架（漸進式框架），由 MVC 發展而來；
+React 是前端元件化框架，由後端元件化發展而來。</p>
+<p><strong>個人感受小結</strong></p>
+<p><strong>Vue 的優勢</strong></p>
+<ul>
+<li>更快的渲染速度和更小的體積</li>
+<li>簡單的語法及專案建立，尤其透過 vue cli 可以依專案快速設定細節，在建立時更為便利且快速。</li>
+<li>響應式的資料狀態，開發更加快速便利</li>
+</ul>
+<p><strong>React 的優勢</strong></p>
+<ul>
+<li>適用於 Web 端和原生 App</li>
+<li>適用於大型應用和更好的可測試/維護性</li>
+<li>更大的生態圈帶來的更多支援和工具</li>
+</ul>
+<p>其實當時在學習 React 時，一開始確實花了一些時間理解，但其實並沒有感受太大的進入障礙，可能很大一部分原因跟我個人很喜歡 JS 有關，再加上是以 React 的 Function Component 寫法開發，理解基本的 hook 如何使用後，就算不看文檔也可以順利開發，不會有太大的問題。</p>
+<p>但進入 Vue ，因為有各種各樣的 api 操作，雖然起手簡單，但要能夠熟練以至於提高開發效率，過程需要需要不斷翻看文檔明白各項配置才真的能上手。而相較於此，React 沒有所謂這些林林總總的 api，因此學習起來，反而感覺 React 像是一張可以自由揮灑的白紙，而 Vue 則像是積木，你必須知道各種 api 的使用方式，知道哪裡該卡哪裡，才可以將整個畫面構件出來。</p>
+<p>那我比較喜歡哪一種呢？
+老實說我還是喜歡 React 。但 Vue 的靈活及相較於 React 的手動操作，Vue 自動響應的變化，還是令人驚嘆尤雨溪這位大神大概真的是神吧！</p>
+<h4 id="參考資源">參考資源</h4>
+<ul>
+<li><a href="https://cn.vuejs.org/v2/guide/comparison.html">Vue : Comparison with Other Frameworks</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/108899766">Vue 作者尤雨溪：以匠人的态度不断打磨完善 Vue</a></li>
+<li><a href="https://www.796t.com/article.php?id=191922">Vue 與 React 的區別和優勢對比</a></li>
+<li><a href="https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/748175/#outline__2">React 與 Vue — 有了 jQuery 為什麼要有 xxx？</a></li>
+</ul>
+<h4 id="延伸閱讀">延伸閱讀</h4>
+<ul>
+<li><a href="https://reactpatterns.cn/">React Patterns</a></li>
+<li><a href="https://github.com/creeperyang/blog/issues/33">解析 snabbdom 源码，教你实现精简的 Virtual DOM 库</a></li>
+</ul>
+
+
+                
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/post/js_basic_1/" data-toggle="tooltip" data-placement="top" title="JS#1：JavaScript運作原理 ─ 深入研究之前，先了解全局">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+                
+
+                
+
+
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/javascript" title="javascript">
+                            javascript
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%89%8D%E7%AB%AF" title="前端">
+                            前端
+                        </a>
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+                <section>
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+                        
+                        <li><a target="_blank" href="https://emilywalkdone.blogspot.com/">我的食旅生活</a></li>
+                        
+                    </ul>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">                  
+                    
+                    <li>
+                        <a href="mailto:emilydondon@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+		            
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/emilycodeee">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/emily-chen-emilydondon">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            <li>
+                <a target="_blank" href="https://www.instagram.com/emilydondon/">
+                    <span class="fa-stack fa-lg">
+                        <i class="fas fa-circle fa-stack-2x"></i>
+                        <i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
+                    </span>
+                </a>
+            </li>
+            
+            
+           
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Emily is coding" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fas fa-circle fa-stack-2x"></i>
+                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+            
+             </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Emily is coding 2023
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+</body>
+</html>

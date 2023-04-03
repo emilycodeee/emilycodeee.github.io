@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Emily is coding">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://emilycodeee.github.io//img/sky.jpg">
+    <meta property="twitter:image" content="https://emilycodeee.github.io//img/sky.jpg" />
+    
+
+    
+    <meta name="title" content="JS#4：Javascript 的範疇/作用域（Scope）與範疇鏈 （Scope Chain）變數查找（variable lookup）" />
+    <meta property="og:title" content="JS#4：Javascript 的範疇/作用域（Scope）與範疇鏈 （Scope Chain）變數查找（variable lookup）" />
+    <meta property="twitter:title" content="JS#4：Javascript 的範疇/作用域（Scope）與範疇鏈 （Scope Chain）變數查找（variable lookup）" />
+    
+
+    
+    <meta name="description" content="">
+    <meta property="og:description" content="" />
+    <meta property="twitter:description" content="" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>JS#4：Javascript 的範疇/作用域（Scope）與範疇鏈 （Scope Chain）變數查找（variable lookup） | Emilydondon Blog</title>
+
+    <link rel="canonical" href="/post/js_basic_4/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Emily is coding</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/life/">life</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tech/">tech</a>
+                        </li>
+                        
+                    
+                    
+		    
+		            <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		           </li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/sky.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/%E5%89%8D%E7%AB%AF" title="前端">
+                            前端
+                        </a>
+                        
+                        <a class="tag" href="/tags/javascript" title="javascript">
+                            javascript
+                        </a>
+                        
+                    </div>
+                    <h1>JS#4：Javascript 的範疇/作用域（Scope）與範疇鏈 （Scope Chain）變數查找（variable lookup）</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                    Emily is coding
+                             
+                            on 
+                            Saturday, August 6, 2022
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <p>
+  <img src="bhs4.jpeg" alt="">
+
+</p>
+<p>這一系列文章，是在 Udemy 上參與 Jonas Schmedtmann 的課程-<a href="https://www.udemy.com/course/the-complete-javascript-course/"> The Complete JavaScript Course 2021: From Zero to Expert! </a>所做的學習筆記，為了深入理解 JavaScript 運作原理，記下那些我未曾注意過的 JavaScript 細節。內容若有任何錯誤，歡迎留言交流指教！</p>
+<p>{% blockquote %}</p>
+<ul>
+<li><a href="#jump_1">了解範疇（Scope）的概念 (What is Scope?)</a></li>
+<li><a href="#jump_2">範疇 Scope－全域範疇 Global Scope、區域範疇 Local Scope</a></li>
+<li><a href="#jump_3">範疇鏈 Scope Chain</a></li>
+<li><a href="#jump_4">範疇鏈 Scope Chain V.S 執行堆疊 call stack</a></li>
+<li><a href="#jump_5">本章重點整理</a></li>
+</ul>
+<p>{% endblockquote %}</p>
+<hr>
+<p>談完執行環境與執行堆疊，讓我們繼續向下探索。(前篇：執行原理與執行堆疊 Call Stack)</p>
+<p>上一篇談到執行環境時，我們看到創建執行環境階段，居然還有著所謂建立「外部環境」，讓函式可以訪問「外部變數」，而這就要談到範疇鏈（Scope Chain)。在這篇筆記中，我們要深入了解什麼是範疇 Scope 以及範疇鏈 Scope Chain。</p>
+<p>先讓我們複習一下，每一個執行環境，都擁有：</p>
+<ul>
+<li>環境變數 (variable environment)</li>
+<li>外部環境（透過 Scope Chain 建立）</li>
+<li>this 關鍵字 (this keyword)</li>
+</ul>
+<p>要談到範疇鏈（Scope Chain）之前，先讓我們了解範疇（Scope）的概念，包含以下</p>
+<h2 id="-了解範疇scope的概念a-idjump_1a">📌 了解範疇（Scope）的概念？<!-- raw HTML omitted --><!-- raw HTML omitted --></h2>
+<h5 id="-作用範疇-scoping">◆ 作用範疇 Scoping：</h5>
+<p>JS 引擎用來管理我們的變數如何組織及如何被訪問的機制，也就是說現行範疇是在判斷 ─ 變數存在於哪裡、可以在哪裡訪問特定變數，在哪裡則不行。</p>
+<h5 id="-語彙作用範疇-lexical-scoping">◆ 語彙作用範疇 Lexical Scoping：</h5>
+<p>白話來說，**就是變數被組織及訪問的機制，完全由被放置於函式的位置或程式碼中區塊(block)位置所決定。**例如，func A 包著 func B，裡面的 func B 可以拿到外面 func A 的變數，但只能由內而外拿，外面不能拿裡面的。或兩個平行獨立的 func C 與 func D 不能互相訪問。</p>
+<p>簡言之，變數的作用範疇，取決於我們編寫程式碼的位置。</p>
+<h5 id="-範疇-scope">◆ 範疇 Scope：</h5>
+<p>Scope 是指編譯器或 JavaScript 引擎藉由識別字名稱（identifier name）查找變數的一組規則。簡單來說，<strong>可以將範疇 Scope 視為是聲明特定變數時，該變數所存在的空間或環境。</strong></p>
+<p>例如，以 function 來舉例，我們知道 function 的變數環境就是 function 本身，如此一來 function 的變數環境(variable environment)與 function 的範疇(scope)好像其實是同一件事？</p>
+<p>其實以函式而言，基本上是一樣的。晚點看看下方範例，可以了解為什麼這麼說。</p>
+<h5 id="-變數範疇-scope-of-a-variable">◆ 變數範疇 Scope of a variable：</h5>
+<p>變數的作用範疇基本上就是整個變數所屬的區域，也可以解釋為說特定變數可以被訪問的範疇。</p>
+<p>統合以上切分範疇 Scope 的基本概念，雖然好像可以直接用 Scope 的定義解釋全部，但如果仔細切分開來，其實會發現仍然有不同的細節，例如範疇(Scope)與變數範疇(Scope of a variable)就代表著完全不同的事。</p>
+<p>雖然可能看起來還是很像一分鐘有六十秒經過的廢話，但看過接下來的例子，就能更明白這些細節所隱含的意義。現在讓我們正式 ZOOM-IN!!</p>
+<h2 id="-範疇-scope-分為兩種全域範疇-global-scope區域範疇-local-scopea-idjump_2a">📌 範疇 Scope 分為兩種：全域範疇 Global Scope、區域範疇 Local Scope<!-- raw HTML omitted --><!-- raw HTML omitted --></h2>
+<p>範疇 Scope 分為兩種：全域範疇 Global Scope、區域範疇 Local Scope，其中區域範疇又分為函式範疇 Function Scope、區塊範疇 Block Scope</p>
+<p>首先讓我們帶著對範疇的基本理解再往下看 ─
+**範疇 Scope 就是我們在程式碼中聲明變數的位置，決定著我們的變數可以在什麼狀態下被訪問。**而別忘了函式也是變數之一，因為歸根究底，函式也是一個值(Value)存放在變數當中。</p>
+<h5 id="-全域範疇-global-scope">◆ 全域範疇 Global Scope</h5>
+<p>首先，全域當然就代表著我們的頂層程式碼（Top Level Code），也就是所有被聲明在函式或區塊(block)以外的程式碼，都屬於全域範疇。</p>
+<p>這些全域變數（Global variable），可以在程式碼中的任何地方被訪問，套一句 Lucy 說的「I am everywhere」</p>
+<p>範例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff79c6">const</span> name <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;emily&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">const</span> job <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;freelancer&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">const</span> year <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">1993</span>;
+</span></span></code></pre></div><h5 id="-區域範疇-local-scope--函式範疇-function-scope區塊範疇-block-scope">◆ 區域範疇 Local Scope ─ 函式範疇 Function Scope、區塊範疇 Block Scope</h5>
+<p><strong>★ 函式範疇 Function Scope</strong></p>
+<p>被聲明在函式內部的所有變數都只能在函式內部被訪問，這也稱為區域範疇（對比全域範疇），或更精準地說函式範疇。也可以白話一點的說，函式內部的變數，只活在函式內，是不能在函式外被訪問的。</p>
+<p>＊而基本上，函式範疇與函式變數環境是一樣的，但我們還是要稱它為函式範疇，因為區塊程式也會有自己的區塊範疇，所以還是要切分開來不同意義。</p>
+<p>範例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">function</span> calcAge(birthday) {
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">const</span> now <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">2037</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">const</span> age <span style="color:#ff79c6">=</span> now <span style="color:#ff79c6">-</span> birthday;
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">return</span> age;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>console.log(now);
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// ReferenceError
+</span></span></span></code></pre></div><p>以上述範例而言，now 變數為 2037，在函式中可以取用它進行計算，但是在函式以外，當我們試圖 console.log(now)時，JS 會試圖在全域範疇中尋找 now 變數，但因為它在函式範疇內，所以找不到 now，而出現錯誤。</p>
+<p>所有函式聲明都有自己的函式範疇，不管聲明函式(function declarations)、表述式函式(function expressions)、或箭頭函式(Arrow functions)都是。並且傳統上只有函式會創建自己的範疇，但到了 ES6，區塊也有自己的作用範疇。</p>
+<p><strong>★ 區塊範疇 Block Scope</strong></p>
+<p>區塊指得是<strong>大括號{}</strong>(curly braces)裡的一切，例如 if{}、for{}，就像函式一樣，區塊內(block)，也就是大括號內的變數都只能在區塊內被訪問。</p>
+<p>而其中最大的分別在於，區塊變數只適用於 let 或 const，也就是說 let 與 const 只限用於他們所存放的區塊內，於是我們說 <strong>let 與 const 屬於區塊範疇</strong> 。而 <strong>var 則屬於函式範疇</strong>，因此可以在區塊外、函式範疇內被訪問，var 界定的範疇可以在下方範例中更深認識。</p>
+<p>＊這也就可以解釋，為什麼 ES5 以前我們只有全域範疇與函式範疇，因為在 ES5 以前，是使用 var 聲明變數，當時只關注於函式，而沒有特別區分出區塊(block)。沒錯就是很單純的將它忽略 XD。<strong>而從 ES6 開始，在嚴格模式&quot;strict&quot;下，函式也等同於區塊範疇</strong>，於此，我們應該永遠在嚴格模式下開發，以避免錯誤。</p>
+<p>範例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff79c6">if</span> (year <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">1981</span> <span style="color:#ff79c6">&amp;&amp;</span> year <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">1996</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">const</span> millenial <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">true</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">const</span> food <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;avocado toast&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>console.log(millenial);
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">//ReferenceError
+</span></span></span></code></pre></div><p>*區塊(block)內聲明的函式，只能在區塊內被訪問。
+接下來我們來談談 範疇鏈 Scope Chain</p>
+<h2 id="-範疇鏈-scope-chaina-idjump_3a">📌 範疇鏈 Scope Chain<!-- raw HTML omitted --><!-- raw HTML omitted --></h2>
+<p>範疇鏈的意思就是所有的內部函式，都可以訪問他們的外部環境來取得所需要的變數，這個查找步驟也稱作<strong>變數查找(variable lookup)</strong>。而範疇鏈只能由內而外，不能由外而內。讓我們看看以下範例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff79c6">const</span> myName <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;emily&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">function</span> first() {
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">const</span> age <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">30</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">//block scope
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>  <span style="color:#ff79c6">if</span> (age <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">30</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">const</span> decade <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">3</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">var</span> millennial <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">true</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">function</span> second() {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">const</span> jib <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;freelancer&#34;</span>;
+</span></span><span style="display:flex;"><span>    console.log(<span style="color:#f1fa8c">`</span><span style="color:#f1fa8c">${</span>myName<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c"> is a </span><span style="color:#f1fa8c">${</span>age<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">-year old </span><span style="color:#f1fa8c">${</span>job<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">`</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">//print emily is a 30-year old freelancer
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>  }
+</span></span><span style="display:flex;"><span>  second();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>first();
+</span></span></code></pre></div><p>由上述例子中，讓我們想想 emily is a 30-year old freelancer 字串是怎麼被打印出來的，以下表格為各個 scope 內的涵蓋變數：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Global Scope</th>
+<th style="text-align:center">first() scope</th>
+<th style="text-align:center">if block scope</th>
+<th style="text-align:center">second() scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">myName=&ldquo;emily&rdquo;</td>
+<td style="text-align:center">age = 30</td>
+<td style="text-align:center">decade = 3</td>
+<td style="text-align:center">job = &ldquo;freelancer&rdquo;</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">millennial = true</td>
+<td style="text-align:center">age = 30</td>
+<td style="text-align:center">age = 30</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">myName =&ldquo;emily&rdquo;</td>
+<td style="text-align:center">millennial = true</td>
+<td style="text-align:center">millennial = true</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">myName =&ldquo;emily&rdquo;</td>
+<td style="text-align:center">myName =&ldquo;emily&rdquo;</td>
+</tr>
+</tbody>
+</table>
+<p>scope chain 只能由子範疇向父範疇查找，而平行的範疇也不能相通。</p>
+<p>讓我們先記得上面這句話，然後把注意力放在 console.log(<code>${myName} is a ${age}-year old ${job}</code>)上，一起來看看字串是如何被打印出來的。</p>
+<p>首先 myName、age 並乍看並不是當前函式變數，但因為 scope chain 所以我們可以向外部(也就是父層)去查找我們所需要的變數，如此查到 func first 內的 age 及最外層全域變數的 myName。</p>
+<p>＊剛剛我們模擬的向外搜尋機制，就是所謂的 scope chain，而這個查找過程也稱為變數查找(variable lookup)。但有一點特別注意是，平行間的區域範疇不能彼此互通，也就是 if block scope 與 second() scope 是不能互相訪問變數的，因為他們的 scope 是各自獨立沒有重疊，而這也就是最一開始提到的語彙作用範疇 Lexical Scoping(也就是 ─ 你的程式碼究竟是寫在哪裡。)</p>
+<p>另外，在 if block scope，我們看到用 var 聲明的 millennial 居然能掙脫 block 被 fucn first 納入範疇，那是因為 var 聲明變數不受 block scope 管制，而屬於最近的、也就是屬於 first 函式範疇。也就因此可以被內部的 second 函式所訪問。</p>
+<p>但因為用 const 聲明的 decade 變數，const 屬於 block scope，所以當然它只能在該 block 裡作用。</p>
+<h2 id="-範疇鏈-the-scope-chain-vs-執行堆疊-call-stacka-idjump_4a">📌 範疇鏈 the Scope Chain V.S 執行堆疊 Call Stack<!-- raw HTML omitted --><!-- raw HTML omitted --></h2>
+<p>現在我們了解了範疇鏈 Scope Chain，讓我們回想一下上一篇的執行堆疊(call stack)，他們兩個有什麼互相影響關係嗎？<strong>答案是沒有！範疇是界定變數可作用的範圍，與函式調用的執行順序沒有關聯！</strong></p>
+<h2 id="-本章重點整理a-idjump_5a">📌 本章重點整理<!-- raw HTML omitted --><!-- raw HTML omitted --></h2>
+<p>{% blockquote %}</p>
+<ul>
+<li>範疇（Scope Chain）永遠都在問的問題是「這個變數到底能夠作用在哪裡」或者「我們可以在哪裡訪問該變數」、「在哪裡不行」</li>
+<li>範疇細分為三種類型：全域範疇、（函式範疇、區塊範疇）＝＞區域範疇</li>
+<li>只有 let、const 屬於區域範疇變數，var 聲明的變數將自動結束於最近的函示範圍內</li>
+<li>在 js 我們有所謂的詞彙範疇(Lexical Scoping)，也就是用來規範我們訪問函式時的判斷準則來自於，該變數在函式或區塊中的位置。也就是 ─ 你的程式碼究竟是寫在哪裡。</li>
+<li>範疇鏈的意思就是所有的內部作用域，都可以訪問他們的外部作用區域，也就是子作用域可以往父層作用域查找所需變數。</li>
+<li>承上，當變數不在現行函式內，引擎會往上(往外)範疇鏈作用尋找(只能往父層、不能往平層)，這就稱為變數查找。</li>
+<li>變數查找為單執行序，外部變數不能往內部變數查找，只有內部可以往上(往父層)查找。</li>
+<li>而這也可以說是，我們可以在一定範圍內(例如最內層的函示作用域)，可以取用的變數，等同於是所有父層作用域加總的變量環境。</li>
+</ul>
+<p>{% endblockquote %}</p>
+<p>最後重點，範疇鏈(scope chain)與執行堆疊(call stack)的順序無關。
+內容若有任何錯誤，歡迎留言交流指教！</p>
+<p><strong><!-- raw HTML omitted -->JavaScript 深度旅遊系列<!-- raw HTML omitted --></strong></p>
+<p><a href="https://emilycodeee.github.io/JS-1/">JS#1：JavaScript 運作原理 ─ 深入研究之前，先了解全局</a>
+<a href="https://emilycodeee.github.io/JS-2/">JS#2：JavaScript 引擎與 JavaScript 的運行環境 ─ 什麼？JavaScript 早就不只是直譯式語言了？！</a>
+<a href="https://emilycodeee.github.io/JS-3/">JS#3：JavaScript 的執行原理，Javascript 的執行環境 (Execution context) 與執行堆疊 (Call Stack)</a>
+<a href="https://emilycodeee.github.io/JS-4/">JS#4：Javascript 的範疇/作用域（Scope）與範疇鏈 （Scope Chain）變數查找（variable lookup）</a>
+<a href="https://emilycodeee.github.io/JS-5/">JS#5：優先認可 變數提升 Hoisting？暫時死區(Temporal Dead Zone) ─ const、let、var 的小祕密</a></p>
+
+
+                
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/js_basic_3/" data-toggle="tooltip" data-placement="top" title="JS#3：JavaScript的執行原理，Javascript 的執行環境 (Execution context) 與執行堆疊 (Call Stack)">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/js_basic_5/" data-toggle="tooltip" data-placement="top" title="JS#5：優先認可 變數提升Hoisting？暫時死區(Temporal Dead Zone) ─ const、let、var 的小祕密">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+                
+
+                
+
+
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/javascript" title="javascript">
+                            javascript
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%89%8D%E7%AB%AF" title="前端">
+                            前端
+                        </a>
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+                <section>
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+                        
+                        <li><a target="_blank" href="https://emilywalkdone.blogspot.com/">我的食旅生活</a></li>
+                        
+                    </ul>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">                  
+                    
+                    <li>
+                        <a href="mailto:emilydondon@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+		            
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/emilycodeee">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/emily-chen-emilydondon">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            <li>
+                <a target="_blank" href="https://www.instagram.com/emilydondon/">
+                    <span class="fa-stack fa-lg">
+                        <i class="fas fa-circle fa-stack-2x"></i>
+                        <i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
+                    </span>
+                </a>
+            </li>
+            
+            
+           
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Emily is coding" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fas fa-circle fa-stack-2x"></i>
+                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+            
+             </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Emily is coding 2023
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+</body>
+</html>

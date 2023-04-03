@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>javascript on Emily is coding</title>
+    <link>https://emilycodeee.github.io/tags/javascript/</link>
+    <description>Recent content in javascript on Emily is coding</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-tw</language>
+    <lastBuildDate>Sat, 06 Aug 2022 12:22:33 +0000</lastBuildDate><atom:link href="https://emilycodeee.github.io/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>JS#6：一點都不tricky，其實很忠心！&#39;&#39;this&#39;&#39; is fun 物件引用 this變數與應用範例</title>
+      <link>https://emilycodeee.github.io/post/js_basic_6/</link>
+      <pubDate>Sat, 06 Aug 2022 12:22:33 +0000</pubDate>
+      
+      <guid>https://emilycodeee.github.io/post/js_basic_6/</guid>
+      <description>這一系列文章，是在 Udemy 上參與 Jonas Schmedtmann 的課程- The Complete JavaScript Course 2021: From Zero to Expert! 所做的學習筆記，為了深入理解 JavaScript 運作原理，記下那些我未曾注意過的 JavaScript 細節。內容若有任何錯</description>
+    </item>
+    
+    <item>
+      <title>JS#5：優先認可 變數提升Hoisting？暫時死區(Temporal Dead Zone) ─ const、let、var 的小祕密</title>
+      <link>https://emilycodeee.github.io/post/js_basic_5/</link>
+      <pubDate>Sat, 06 Aug 2022 11:40:49 +0000</pubDate>
+      
+      <guid>https://emilycodeee.github.io/post/js_basic_5/</guid>
+      <description>這一系列文章，是在 Udemy 上參與 Jonas Schmedtmann 的課程- The Complete JavaScript Course 2021: From Zero to Expert! 所做的學習筆記，為了深入理解 JavaScript 運作原理，記下那些我未曾注意過的 JavaScript 細節。內容若有任何錯</description>
+    </item>
+    
+    <item>
+      <title>JS#4：Javascript 的範疇/作用域（Scope）與範疇鏈 （Scope Chain）變數查找（variable lookup）</title>
+      <link>https://emilycodeee.github.io/post/js_basic_4/</link>
+      <pubDate>Sat, 06 Aug 2022 11:05:22 +0000</pubDate>
+      
+      <guid>https://emilycodeee.github.io/post/js_basic_4/</guid>
+      <description>這一系列文章，是在 Udemy 上參與 Jonas Schmedtmann 的課程- The Complete JavaScript Course 2021: From Zero to Expert! 所做的學習筆記，為了深入理解 JavaScript 運作原理，記下那些我未曾注意過的 JavaScript 細節。內容若有任何錯</description>
+    </item>
+    
+    <item>
+      <title>JS#3：JavaScript的執行原理，Javascript 的執行環境 (Execution context) 與執行堆疊 (Call Stack)</title>
+      <link>https://emilycodeee.github.io/post/js_basic_3/</link>
+      <pubDate>Sat, 06 Aug 2022 10:18:27 +0000</pubDate>
+      
+      <guid>https://emilycodeee.github.io/post/js_basic_3/</guid>
+      <description>這一系列文章，是在 Udemy 上參與 Jonas Schmedtmann 的課程- The Complete JavaScript Course 2021: From Zero to Expert! 所做的學習筆記，為了深入理解 JavaScript 運作原理，記下那些我未曾注意過的 JavaScript 細節。內容若有任何錯</description>
+    </item>
+    
+    <item>
+      <title>JS#2：JavaScript引擎與JavaScript的運行環境 ─ 什麼？JavaScript早就不只是直譯式語言了？！</title>
+      <link>https://emilycodeee.github.io/post/js_basic_2/</link>
+      <pubDate>Fri, 05 Aug 2022 21:52:57 +0000</pubDate>
+      
+      <guid>https://emilycodeee.github.io/post/js_basic_2/</guid>
+      <description>這一系列文章，是在 Udemy 上參與 Jonas Schmedtmann 的課程- The Complete JavaScript Course 2021: From Zero to Expert! 所做的學習筆記，為了深入理解 JavaScript 運作原理，記下那些我未曾注意過的 JavaScript 細節。內容若有任何錯</description>
+    </item>
+    
+    <item>
+      <title>JS#1：JavaScript運作原理 ─ 深入研究之前，先了解全局</title>
+      <link>https://emilycodeee.github.io/post/js_basic_1/</link>
+      <pubDate>Thu, 04 Aug 2022 21:26:41 +0000</pubDate>
+      
+      <guid>https://emilycodeee.github.io/post/js_basic_1/</guid>
+      <description>在結束 Alpha Camp 第二階段的課程後，也開始尋找其他線上的學習資源，而在眾多推薦下購買了 Jonas Schmedtmann 在 Udemy 上的課程-The Complete JavaScript Course 2021: From Zero to Expert! 想深入了解 JavaSc</description>
+    </item>
+    
+  </channel>
+</rss>

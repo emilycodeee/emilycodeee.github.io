@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Emily is coding">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://emilycodeee.github.io//img/sky.jpg">
+    <meta property="twitter:image" content="https://emilycodeee.github.io//img/sky.jpg" />
+    
+
+    
+    <meta name="title" content="JS#5：優先認可 變數提升Hoisting？暫時死區(Temporal Dead Zone) ─ const、let、var 的小祕密" />
+    <meta property="og:title" content="JS#5：優先認可 變數提升Hoisting？暫時死區(Temporal Dead Zone) ─ const、let、var 的小祕密" />
+    <meta property="twitter:title" content="JS#5：優先認可 變數提升Hoisting？暫時死區(Temporal Dead Zone) ─ const、let、var 的小祕密" />
+    
+
+    
+    <meta name="description" content="">
+    <meta property="og:description" content="" />
+    <meta property="twitter:description" content="" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>JS#5：優先認可 變數提升Hoisting？暫時死區(Temporal Dead Zone) ─ const、let、var 的小祕密 | Emilydondon Blog</title>
+
+    <link rel="canonical" href="/post/js_basic_5/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Emily is coding</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/life/">life</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tech/">tech</a>
+                        </li>
+                        
+                    
+                    
+		    
+		            <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		           </li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/sky.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/%E5%89%8D%E7%AB%AF" title="前端">
+                            前端
+                        </a>
+                        
+                        <a class="tag" href="/tags/javascript" title="javascript">
+                            javascript
+                        </a>
+                        
+                    </div>
+                    <h1>JS#5：優先認可 變數提升Hoisting？暫時死區(Temporal Dead Zone) ─ const、let、var 的小祕密</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                    Emily is coding
+                             
+                            on 
+                            Saturday, August 6, 2022
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <p>
+  <img src="./JS-5/bhs5.jpeg" alt="">
+
+</p>
+<p>這一系列文章，是在 Udemy 上參與 Jonas Schmedtmann 的課程-<a href="https://www.udemy.com/course/the-complete-javascript-course/"> The Complete JavaScript Course 2021: From Zero to Expert! </a>所做的學習筆記，為了深入理解 JavaScript 運作原理，記下那些我未曾注意過的 JavaScript 細節。內容若有任何錯誤，歡迎留言交流指教！</p>
+<hr>
+<p>從執行環境、執行堆疊到範疇鍊，我們的 Javascript 深度旅行好像已經走了很遠，現在讓我們談談在 JavaScript 很容易被誤會的概念 ─ 提升 Hoisting</p>
+<p>從執行環境中，我們知道執行環境(Execution Context)分別為變數環境、範疇鏈、this 關鍵字。在上一篇談完範疇鏈後，現在是時候讓我們進一步看看變數環境有關的細節 ─<strong>變數是如何在 JavaScript 被創建的？而這就會馬上破題談到提升 Hoisting！</strong></p>
+<h2 id="-優先認可-提升-hoistinga-idjump_1a">📌 優先認可 提升 Hoisting？<!-- raw HTML omitted --><!-- raw HTML omitted --></h2>
+<p>提升 Hoisting 的概念，簡單來說就是優先認可，也就是讓某些類型的變數<!-- raw HTML omitted --><strong>可以在其被聲明之前，在該作用範疇中被使用。</strong><!-- raw HTML omitted --></p>
+<p>或許有些人的解釋是，變量被神奇的提升或被移到範疇的頂部。表面上看起來真的像是如此沒錯，但其實它的原理並不是這樣的！</p>
+<p>從原理來看，JS 引擎是在執行前先對所有聲明變數做了掃描，而這個階段也就是先前提到的<strong>創建執行環境(execution context)的階段 ─ 創建階段(creation phase)</strong>，在這個階段被找到的每個變數，會被建立新的屬性存放在變數環境的物件中，而這就是 hoisting 真正作用的過程。</p>
+<h2 id="-不同聲明方法下的-hoisting-差別a-idjump_2a">📌 不同聲明方法下的 Hoisting 差別<!-- raw HTML omitted --><!-- raw HTML omitted --></h2>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>Hoisting 並非在所有聲明屬性中都有相同作用，現在讓我們以下面的表格來看看差別如何以及為什麼會如此！</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">-</th>
+<th style="text-align:center">是否提升 Hoisted?</th>
+<th style="text-align:center">初始值</th>
+<th style="text-align:center">範疇</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Function Declaration(函式陳述句)</td>
+<td style="text-align:center">&quot; O &quot;</td>
+<td style="text-align:center">函式本身</td>
+<td style="text-align:center">區塊範疇</td>
+</tr>
+<tr>
+<td style="text-align:center">var 聲明變數</td>
+<td style="text-align:center">&quot; O &quot;</td>
+<td style="text-align:center">undefined</td>
+<td style="text-align:center">函式範疇</td>
+</tr>
+<tr>
+<td style="text-align:center">let const 聲明變數</td>
+<td style="text-align:center">&quot; X.. &quot;</td>
+<td style="text-align:center">未初始化，TDZ</td>
+<td style="text-align:center">區塊範疇</td>
+</tr>
+<tr>
+<td style="text-align:center">Function Expression(函式表述式)、箭頭函式</td>
+<td style="text-align:center">取決於使用什麼變數</td>
+<td style="text-align:center">var</td>
+<td style="text-align:center">const/let</td>
+</tr>
+</tbody>
+</table>
+<h5 id="-函式陳述句-function-declaration">◆ 函式陳述句 (Function Declaration)</h5>
+<p>會提升，而初始值就是該函式本身。這也說明為什麼我們可以在函式被聲明之前，調用該函式。因為函式陳述句在執行開始前，就「已經」被儲存於變數環境物件中。</p>
+<p>*只有在嚴格模式(strict mode)下範疇才僅限於區塊範疇，若是在鬆散模式則屬於函式範疇。</p>
+<h5 id="-var-聲明變數">◆ var 聲明變數</h5>
+<p>會提升，初始值為 undefined。一般而言，我們在聲明變數前使用變數，若不是被跳錯誤，就是取得變數值，怎麼都不會出現 undefined，為什麼 var 卻變成 undefined??</p>
+<p>其實這是 JavaScript 中的一個 bug，也是為什麼在現行 JavaScript 我們幾乎不使用 var 的原因。</p>
+<h5 id="-letconst-聲明變數">◆ let/const 聲明變數</h5>
+<p>嚴格來說，是有提升的，但因為他們的值被設定為尚未初始化(uninitialized)，也就沒有值(value)，所以實際上的提升就像是完全沒有發生一樣。&gt;會報錯顯示 cannot access before initialization。</p>
+<p>而我們也會稱這些變數被放置在暫時死區(Temporal Dead Zone - TDZ)，也就是說從該變數存在的範疇起點到該變數被聲明的位置之前沒有辦法被訪問，簡單來說就是還沒被聲明所以不能被訪問。</p>
+<p>如果在聲明之前嘗試訪問 let 或 const 變數，我們就會得到錯誤！還記得先前說的 let、const 屬於區塊範疇嗎？而這些種種因素加在一起，控制變數可以被呼叫的區間，也就是為什麼現行 JavaScript 會引入 let 和 const，同時不使用 var 的原因 (再次看向樓上怪怪的 undefined&hellip;)</p>
+<h5 id="-function-expression-函式表達式與箭頭函式">◆ Function Expression 函式表達式與箭頭函式</h5>
+<p>取決於聲明函式時使用的是什麼方法(var 或 const/let)，如果使用 var，則在函式被聲明前會被提升為 undefined，如果使用 const/let，則同上，在聲明前調用會存在暫時死區(TDZ)的問題。</p>
+<h2 id="-暫時死區temporal-dead-zonea-idjump_3a">📌 暫時死區(Temporal Dead Zone)<!-- raw HTML omitted --><!-- raw HTML omitted --></h2>
+<p>暫時死區聽起來好像很 ROCK! 到底什麼意思？
+範例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff79c6">const</span> myName <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;Emily&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">if</span> (myName <span style="color:#ff79c6">===</span> <span style="color:#f1fa8c">&#34;Emily&#34;</span>) {
+</span></span><span style="display:flex;"><span>  console.log(<span style="color:#f1fa8c">`Emily is a </span><span style="color:#f1fa8c">${</span>job<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">`</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">const</span> age <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">2037</span> <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">1989</span>;
+</span></span><span style="display:flex;"><span>  console.log(aga);
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">const</span> job <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;freelancer&#34;</span>;
+</span></span><span style="display:flex;"><span>  console.log(x);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>console.log(<span style="color:#f1fa8c">`Emily is a </span><span style="color:#f1fa8c">${</span>job<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">`</span>);
+</span></span></code></pre></div><p>從 if 區塊第一行到 const 聲明 job 變數前，都屬於 job 變數的 TDZ，所以若是呼叫 job 會抱錯告訴你該變數還沒被初始化。(例圖)</p>
+<p>
+  <img src="bhs5-1.jpeg" alt="">
+
+</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>console.log(x);
+</span></span></code></pre></div><p>而若我們連聲明變數都沒有，卻進行呼叫，則會出現 is no defined 未定義</p>
+<p>
+  <img src="bhs5-2.jpeg" alt="">
+
+</p>
+<p>現在讓我們把兩件事情統整起來看，事實上 job 雖然暫時處於 TDZ 狀態，但 JS 引擎知道 job 變數始終會被初始化，<strong>是因為 JS 引擎已經事先掃描過完整代碼</strong>，而他只是在變量環境的創建階段將 job 設定為尚未初始化。</p>
+<p>於是當執行到達變數聲明那一行時，變數就會被從 TDZ 中移除，也就是說可以開始使用了。</p>
+<p>總的來說，let、const 都有他們自己的暫時死區(TDZ)，也就是從範疇的第一行到他們真正被聲明的那一行。</p>
+<p>有了觀念後，讓我們來看看範例吧！</p>
+<h5 id="-變數-hoisting-範例">◆ 變數 Hoisting 範例</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>console.log(me);
+</span></span><span style="display:flex;"><span>console.log(gender);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> me <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;emily&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">let</span> gender <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;female&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">const</span> year <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">1993</span>;
+</span></span></code></pre></div><p>
+  <img src="bhs5-3.jpeg" alt="">
+
+</p>
+<p>被 var 聲明的變數打印出 undefined，而 gender 則是出現未定義狀態。</p>
+<h5 id="-函式-hoisting-範例">◆ 函式 Hoisting 範例</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>console.log(addDecl(<span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>));
+</span></span><span style="display:flex;"><span>console.log(addExpr(<span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>));
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">//ex:var
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>console.log(addArrow(<span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">3</span>));
+</span></span><span style="display:flex;"><span>console.log(addArrow);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">//Function Declaration
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">function</span> addDecl(a, b) {
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">return</span> a <span style="color:#ff79c6">+</span> b;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">//Function Expression
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">const</span> addExpr <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">function</span> (a, b) {
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">return</span> a <span style="color:#ff79c6">+</span> b;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">//Arrow Function
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">var</span> addArrow <span style="color:#ff79c6">=</span> (a, b) =&gt; a <span style="color:#ff79c6">+</span> b;
+</span></span></code></pre></div><p>
+  <img src="bhs5-4.jpeg" alt="">
+
+</p>
+<p>Function Declaration(函式陳述句)因為提升機制 hoisting，於是可以被正常調用，而 Function Expression(函式表述式)則因為使用 const 變數聲明處於未初始化階段，也就是位於 TDZ 狀態中。</p>
+<p>
+  <img src="bhs5-5.jpeg" alt="">
+
+</p>
+<p>var 聲明的箭頭函式，被提升為 undefined，而因為函式本身已經變成 undefined，於是在調用 addArrow(2,3)時，就像是調用了 undefined(2,3)，所以報錯會顯示 addArrow 並不是 function</p>
+<h5 id="-神秘的-var-undefined-陷阱">◆ 神秘的 var undefined 陷阱</h5>
+<p>這裡我們設定一個刪除購物車的函式，邏輯設定是「當商品總數為 0 時」執行刪除購物車。注意，因為 0 布林值為 fales，所以假設我們的設定邏輯是，當 numPruducts=0，也就是呈現 false 時，就執行 deleShopingCart()</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>console.log(numPruducts);
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">//print undefined
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">if</span> (<span style="color:#ff79c6">!</span>numPruducts) deleShopingCart();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> numPruducts <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">10</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">function</span> deleShopingCart() {
+</span></span><span style="display:flex;"><span>  console.log(<span style="color:#f1fa8c">&#34;all products deleted&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>
+  <img src="bhs5-6.jpeg" alt="">
+
+</p>
+<p>而在這例子中，購物車被刪除了！！但明明 numPruducts 裡有 10 件商品，<strong>明明不為 0</strong>卻達到執行條件了？<strong>因為 var 變數 Hoisting 的機制，在 var 變數聲明前被初始為 undefined，也就是 false 所以翻轉也就造成執行條件成立。</strong></p>
+<p>當然這是一個迷你的例子，所以糾錯容易，試著想像如果今天有幾百幾千行程式碼，要找到他應該會很崩潰吧？而這就是為什麼避免使用 var 的原因。</p>
+<p>讀到這裡，為什麼 const/let 被引入、為什麼要有 TDZ？你有答案了嗎？</p>
+<h2 id="-為什麼要有-tdztemporal-dead-zone-a-idjump_4a">📌 為什麼要有 TDZ(Temporal Dead Zone )？<!-- raw HTML omitted --><!-- raw HTML omitted --></h2>
+<p>如果還有點不確定，讓我們在想想令人混淆的 var&hellip;.</p>
+<p>沒錯，TDZ 被引入的原因，首要就是為了<strong>避免錯誤及抓取錯誤</strong>，因為當我們使用尚未被聲明的變數而產生 undefined 時，可能會導致嚴重的錯誤，而更可怕的是你有可能會找不到他(或應該說很難找到他)，<strong>避免錯誤最好的方法，就是讓錯誤變得顯而易見，而 TDZ 就是因為這個而存在，因為他會報錯！</strong></p>
+<p>第二、讓 const 照他們被設定的規則來工作 ─ 因為 const 不能被重新賦值，所以不可能先將 const 變數設定為 undefined，才又將他們分配實際值，TDZ 機制讓 const 只有在被賦值時才能被使用。</p>
+<h2 id="-為什麼要有提升-hoistinga-idjump_5a">📌 為什麼要有提升 Hoisting？<!-- raw HTML omitted --><!-- raw HTML omitted --></h2>
+<p>起初 JavaScript 的創造者實施 Hoisting 是為了讓函式陳述句(Function Statement/Function Declaration)，在被聲明之前就允許被調用，而這其實是程式語言技術中不可或缺的方法，就像解決相互遞迴的問題(mutual resursion)，而也有人認為提升的機制，讓程式碼更具可讀性。
+<a href="https://medium.com/weekly-webtips/hoisting-in-javascript-and-why-we-need-c99d1469de44">Hoisting in JavaScript and why we need</a></p>
+<p>當然，在當時的時空背景提升 hoisting 也適用於 var 聲明，因為在當時那是 Hoisting 唯一可以執行的方式，所以嚴格來說 var 變數的提升有點像是整個機制下的副產品，在那時候簡單把 var 變數提升成 undefined 好像是不錯的折衷方式，但很明顯現在不是 XD，所以才有了 let/const 的引入</p>
+<h2 id="-再多一點-take-awayvar-的小秘密a-idjump_6a">📌 再多一點 take away：var 的小秘密<!-- raw HTML omitted --><!-- raw HTML omitted --></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> x <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">1</span>;
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">let</span> y <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">2</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">const</span> z <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">3</span>;
+</span></span></code></pre></div><p>
+  <img src="bhs5-7.jpeg" alt="">
+
+
+
+  <img src="bhs5-8.jpeg" alt="">
+
+
+
+  <img src="bhs5-9.jpeg" alt="">
+
+</p>
+<p>window 是 JavaScript 的全域物件，在這裡可以看到各式各樣的操作函式，而重要的是在這裡會發現居然有 var 聲明的 x 變數屬性，但卻看不見 z、y。</p>
+<p>現在知道了吧！用 const、let 聲明變數不會在 window 物件裡被創建屬性，但 var 會。</p>
+<p>以上，其實 hoisting 真是個有趣的小東西呀</p>
+<p><strong><!-- raw HTML omitted -->JavaScript 深度旅遊系列<!-- raw HTML omitted --></strong></p>
+<ul>
+<li><a href="https://emilycodeee.github.io/JS-1/">JS#1：JavaScript 運作原理 ─ 深入研究之前，先了解全局</a></li>
+<li><a href="https://emilycodeee.github.io/JS-2/">JS#2：JavaScript 引擎與 JavaScript 的運行環境 ─ 什麼？JavaScript 早就不只是直譯式語言了？！</a></li>
+<li><a href="https://emilycodeee.github.io/JS-3/">JS#3：JavaScript 的執行原理，Javascript 的執行環境 (Execution context) 與執行堆疊 (Call Stack)</a></li>
+<li><a href="https://emilycodeee.github.io/JS-4/">JS#4：Javascript 的範疇/作用域（Scope）與範疇鏈 （Scope Chain）變數查找（variable lookup）</a></li>
+<li><a href="https://emilycodeee.github.io/JS-5/">JS#5：優先認可 變數提升 Hoisting？暫時死區(Temporal Dead Zone) ─ const、let、var 的小祕密</a></li>
+</ul>
+
+
+                
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/js_basic_4/" data-toggle="tooltip" data-placement="top" title="JS#4：Javascript 的範疇/作用域（Scope）與範疇鏈 （Scope Chain）變數查找（variable lookup）">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/js_basic_6/" data-toggle="tooltip" data-placement="top" title="JS#6：一點都不tricky，其實很忠心！&#39;&#39;this&#39;&#39; is fun 物件引用 this變數與應用範例">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+                
+
+                
+
+
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/javascript" title="javascript">
+                            javascript
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%89%8D%E7%AB%AF" title="前端">
+                            前端
+                        </a>
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+                <section>
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+                        
+                        <li><a target="_blank" href="https://emilywalkdone.blogspot.com/">我的食旅生活</a></li>
+                        
+                    </ul>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">                  
+                    
+                    <li>
+                        <a href="mailto:emilydondon@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+		            
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/emilycodeee">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/emily-chen-emilydondon">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            <li>
+                <a target="_blank" href="https://www.instagram.com/emilydondon/">
+                    <span class="fa-stack fa-lg">
+                        <i class="fas fa-circle fa-stack-2x"></i>
+                        <i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
+                    </span>
+                </a>
+            </li>
+            
+            
+           
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Emily is coding" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fas fa-circle fa-stack-2x"></i>
+                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+            
+             </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Emily is coding 2023
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+</body>
+</html>

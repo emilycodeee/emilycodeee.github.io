@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Emily is coding">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://emilycodeee.github.io//img/sky.jpg">
+    <meta property="twitter:image" content="https://emilycodeee.github.io//img/sky.jpg" />
+    
+
+    
+    <meta name="title" content="JS#6：一點都不tricky，其實很忠心！&#39;&#39;this&#39;&#39; is fun 物件引用 this變數與應用範例" />
+    <meta property="og:title" content="JS#6：一點都不tricky，其實很忠心！&#39;&#39;this&#39;&#39; is fun 物件引用 this變數與應用範例" />
+    <meta property="twitter:title" content="JS#6：一點都不tricky，其實很忠心！&#39;&#39;this&#39;&#39; is fun 物件引用 this變數與應用範例" />
+    
+
+    
+    <meta name="description" content="">
+    <meta property="og:description" content="" />
+    <meta property="twitter:description" content="" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>JS#6：一點都不tricky，其實很忠心！&#39;&#39;this&#39;&#39; is fun 物件引用 this變數與應用範例 | Emilydondon Blog</title>
+
+    <link rel="canonical" href="/post/js_basic_6/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Emily is coding</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/life/">life</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/tech/">tech</a>
+                        </li>
+                        
+                    
+                    
+		    
+		            <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		           </li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/sky.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/%E5%89%8D%E7%AB%AF" title="前端">
+                            前端
+                        </a>
+                        
+                        <a class="tag" href="/tags/javascript" title="javascript">
+                            javascript
+                        </a>
+                        
+                    </div>
+                    <h1>JS#6：一點都不tricky，其實很忠心！&#39;&#39;this&#39;&#39; is fun 物件引用 this變數與應用範例</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                    Emily is coding
+                             
+                            on 
+                            Saturday, August 6, 2022
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <p>
+  <img src="bhs6.jpeg" alt="">
+
+</p>
+<p>這一系列文章，是在 Udemy 上參與 Jonas Schmedtmann 的課程-<a href="https://www.udemy.com/course/the-complete-javascript-course/"> The Complete JavaScript Course 2021: From Zero to Expert! </a>所做的學習筆記，為了深入理解 JavaScript 運作原理，記下那些我未曾注意過的 JavaScript 細節。內容若有任何錯誤，歡迎留言交流指教！</p>
+<hr>
+<p>是時候來看看 this 這個小東西了！之前在初學 JavaScript 時(現在也沒多資深)，時有耳聞 this 關鍵字是一個 tricky 的小東西，回頭看我們已經逐步建立起還不錯的觀念，現在是時候讓我們迎頭趕上 this 變數了。</p>
+<h2 id="-this-變數是什麼what-is-this-keyworda-idjump_1a">📌 this 變數是什麼？what is this keyword？<!-- raw HTML omitted --><!-- raw HTML omitted --></h2>
+<p>this 關鍵字，或稱 this 變數，是一個特殊變數，建立於每一個執行環境(execution context)，或也可以說每一個函式，並 this 變數的值永遠取該函式的調用者。而且這個值不是靜態的，也就是說這個值是會變動的，所以才說他 tricky。</p>
+<p>this 的值取決於該函示被調用的方式，並且只有該函示確實被調用時才會被賦值。先別慌問題不大，讓我們繼續看下去！</p>
+<h2 id="-this-變數被調用的四種方式a-idjump_2a">📌 this 變數被調用的四種方式？<!-- raw HTML omitted --><!-- raw HTML omitted --></h2>
+<p>◆ 方法 method ─
+this 值指向調用該方法的整個物件。簡單來說，當我們調用一個方法時，裡面的 this 變數會簡單指向該對象，換句話說，就是指向 <strong>「誰」在調用方法</strong>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff79c6">const</span> emily <span style="color:#ff79c6">=</span> {
+</span></span><span style="display:flex;"><span>name <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;emily&#39;</span>,
+</span></span><span style="display:flex;"><span>year <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">1993</span>,
+</span></span><span style="display:flex;"><span>calcAge<span style="color:#ff79c6">:</span><span style="color:#8be9fd;font-style:italic">function</span>(){
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">return</span> <span style="color:#bd93f9">2037</span> <span style="color:#ff79c6">-</span> <span style="color:#ff79c6">this</span>.year
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>emily.calcAge()
+</span></span></code></pre></div><p>範例說明：在上述例子中，calcAge 就是一個方法，看到最後一行，emily.calcAge()，應該看做是 emily 調用了 calcAge()，所以 this 自然指向調用者 emily 的所有屬性，所以 this.year 就取得了 1993。</p>
+<h5 id="-單純調用函式-function-">◆ 單純調用函式 function ─</h5>
+<p>當我們單純調用 function，也就沒有調用對象，所以不能視為是方法，而當然也就因此「沒有對象」可以賦值，於是 this 就等於 undefined。 *但這只對嚴格模式下有效，若是鬆散狀態，則 this 會指向全域物件，例如瀏覽器的全域物件就會是 window。</p>
+<h5 id="-箭頭函式-arrow-function-">◆ 箭頭函式 Arrow function ─</h5>
+<p>因為箭頭函式沒有自己的 this 變數，所以會指向他的父層(也就是包圍著他的函式)，以技術角度來說，這就稱為<strong>詞彙 this 關鍵字(the lexical this keyword)</strong>，因為他就只是被外部的詞彙範疇(lexical scope)撿起來了。</p>
+<h5 id="-事件監聽器-event-listener-調用-">◆ 事件監聽器 Event Listener 調用 ─</h5>
+<p>如果函式被 Event Listener 調用，則會指向綁定 listener 的節點 Dom 元素，也就是調用該方法的對象。</p>
+<p>有沒有逐漸了解 this 指向的規則了呢？感覺好像比原本以為的簡單許多吧？在詳細看範例之前，讓我們再多輸入一點重要資訊來更認識 this 關鍵字</p>
+<p><strong>this 變數永遠不會指向我們正在使用的函式。</strong>
+<strong>this 變數永遠不會指向函式的變數環境。</strong></p>
+<p>而其實也還有別的方法可以讓我們調用函式，例如 new、call、apply、bind，這之中 this 使用的方法也略有不同，但在這裡就先不做深述</p>
+<h2 id="-this-變數應用範例a-idjump_3a">📌 this 變數應用範例<!-- raw HTML omitted --><!-- raw HTML omitted --></h2>
+<h5 id="-全域範疇的-this">◆ 全域範疇的 this</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>console.log(<span style="color:#ff79c6">this</span>);
+</span></span></code></pre></div><p>
+  <img src="bhs6-1.jpeg" alt="">
+
+</p>
+<p><strong>範例說明：打印出外圍全域物件 window</strong></p>
+<h5 id="-單純調用函式-function">◆ 單純調用函式 function</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff79c6">const</span> calcAge <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">function</span> (birthday) {
+</span></span><span style="display:flex;"><span>  console.log(<span style="color:#bd93f9">2037</span> <span style="color:#ff79c6">-</span> birthday);
+</span></span><span style="display:flex;"><span>  console.log(<span style="color:#ff79c6">this</span>);
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>calcAge(<span style="color:#bd93f9">1993</span>);
+</span></span></code></pre></div><p>
+  <img src="bhs6-2.jpeg" alt="">
+
+</p>
+<p><strong>範例說明：打印出 undefined</strong>
+因為函式沒有被附加到任何對象上，所以也就沒有我們說的調用者，於是會打印出 undefined，但如果在非嚴格模式下，就會是最一開始的範例打印出外圍全域物件 window</p>
+<h5 id="-箭頭函式-arrow-function">◆ 箭頭函式 Arrow function</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff79c6">const</span> calcAgeArrow <span style="color:#ff79c6">=</span> (birthday) =&gt; {
+</span></span><span style="display:flex;"><span>  console.log(<span style="color:#bd93f9">2037</span> <span style="color:#ff79c6">-</span> birthday);
+</span></span><span style="display:flex;"><span>  console.log(<span style="color:#ff79c6">this</span>);
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>calcAgeArrow(<span style="color:#bd93f9">1993</span>);
+</span></span></code></pre></div><p>
+  <img src="bhs6-3.jpeg" alt="">
+
+</p>
+<p><strong>範例說明：打印出 window</strong>
+因為箭頭函示沒有自己 this 變數，所以會指向父作用域的 this 變數，也就是全域範疇的 this─window，也就是最一開始的範例打印出外圍全域物件 window。</p>
+<p><strong>暫停一下：</strong>
+先讓我們暫時來比較並釐清上面兩個函式方法，單純調用函式有自己的 this 變數，只是因為單純調用沒有附載在任何對象下，所以自然 this 的值就是 undefined，而箭頭函式則是壓根沒有 this 變數，所以才指向父範疇的 this 變數。在下一篇筆記針對一般函式與箭頭函式的筆記中，也會說明沒有 this 變數對箭頭函式有什麼影響。</p>
+<h4 id="調用對象影響-this-變數變動範例">調用對象影響 this 變數變動範例</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff79c6">const</span> emily <span style="color:#ff79c6">=</span> {
+</span></span><span style="display:flex;"><span>  year<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">1993</span>,
+</span></span><span style="display:flex;"><span>  calcAge<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">function</span> () {
+</span></span><span style="display:flex;"><span>    console.log(<span style="color:#ff79c6">this</span>);
+</span></span><span style="display:flex;"><span>    console.log(<span style="color:#bd93f9">2037</span> <span style="color:#ff79c6">-</span> <span style="color:#ff79c6">this</span>.year);
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>emily.calcAge();
+</span></span></code></pre></div><p>
+  <img src="bhs6-4.jpeg" alt="">
+
+</p>
+<p>this 打印出 emily 整個物件，而這也就是先前說的，this 的值會指向該調用者的所有屬性。</p>
+<p>*在這裡要注意的是，this 之所以會打印出 emily 整個物件，不是因為 this 就在 emily 物件裡面，而是因為最後一行，是 emily 調用了 calcAge()，所以 this 的值才指向 emily。好像有點迷糊嗎？讓我們繼續看看下面的例子。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#6272a4">//我們先聲明一個新物件
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">const</span> peter <span style="color:#ff79c6">=</span> {
+</span></span><span style="display:flex;"><span>  year<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">2017</span>,
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">//將上面emily物件中的calcAge方法複製進peter的物件中
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>peter.calcAge <span style="color:#ff79c6">=</span> emily.calcAge;
+</span></span></code></pre></div><p>現在 peter 跟 emily 都有了 calcAge 方法，而這個複製的動作也稱為方法借用(method borrowing)，讓我們省去重複寫程式碼的麻煩。</p>
+<p>
+  <img src="bhs6-5.jpeg" alt="">
+
+</p>
+<p>現在讓我們看看 peter.calcAge()會印出什麼</p>
+<p>
+  <img src="bhs6-6.jpeg" alt="">
+
+</p>
+<p>打印出 20，也就是正確的運算 2037-2017。從這裡我們可以更清楚了解，所謂 this 不是單純指向該對象，而是調用該方法的對象，是什麼意思。以及為什麼我們反覆重複這句話。因為很重要!!!</p>
+<ol>
+<li>雖然 calcAge 一開始是被寫在 emily 裡面，但他的 this 變數值，仍指向調用他的 peter</li>
+<li>this 值是會變動的，也就為什麼造成上面第一點的變化，原本的 this 值是 emily、現在是 peter 調用該 calcAge 方法，所以 this 值變為 peter。</li>
+</ol>
+<p><strong>再進一步演示，如果我們把 function 拿出來又會發生什麼變化。</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff79c6">const</span> f <span style="color:#ff79c6">=</span> emily.calcAge;
+</span></span><span style="display:flex;"><span>console.log(f);
+</span></span><span style="display:flex;"><span>f();
+</span></span></code></pre></div><p>
+  <img src="bhs6-7.jpeg" alt="">
+
+
+報錯！因為現在的 func f 變成單純調用函式，沒有依附在任何對象上，所以原本的 this 變數現在變成 undefined 了。</p>
+<h2 id="-常規函式與箭頭函式的-this-變數陷阱a-idjump_4a">📌 常規函式與箭頭函式的 THIS 變數陷阱<!-- raw HTML omitted --><!-- raw HTML omitted --></h2>
+<h4 id="-陷阱範例-1">◆ 陷阱範例 1</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff79c6">const</span> emily <span style="color:#ff79c6">=</span> {
+</span></span><span style="display:flex;"><span>  firstName<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#34;emily&#34;</span>,
+</span></span><span style="display:flex;"><span>  year<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">1993</span>,
+</span></span><span style="display:flex;"><span>  calcAge<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">function</span> () {
+</span></span><span style="display:flex;"><span>    console.log(<span style="color:#ff79c6">this</span>);
+</span></span><span style="display:flex;"><span>    console.log(<span style="color:#bd93f9">2037</span> <span style="color:#ff79c6">-</span> <span style="color:#ff79c6">this</span>.year);
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  greet<span style="color:#ff79c6">:</span> () =&gt; {
+</span></span><span style="display:flex;"><span>    console.log(<span style="color:#f1fa8c">`hey </span><span style="color:#f1fa8c">${</span><span style="color:#ff79c6">this</span>.firstName<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">`</span>);
+</span></span><span style="display:flex;"><span>    console.log(<span style="color:#ff79c6">this</span>);
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>emily.greet();
+</span></span></code></pre></div><p>
+  <img src="bhs6-8.jpeg" alt="">
+
+</p>
+<p>greet 是箭頭函式，而箭頭函式沒有自己的 this 變數，他會去抓取父層範疇的 this 變數，而在這個例子裡，父層範疇則屬於 global，而 global 的 this 變數為 window 物件。於是 this.firstName 就等於 window.firstName，物件中找不到這個屬性，自然就回傳了未定義 undefined。</p>
+<p>而上述例子中，如果使用的是 var，那結果就又更危險了。因為記得嗎？<strong>var 聲明變數會在 window 中創建屬性</strong>。</p>
+<p><code>如果我們在上述例子中加上一行var firstName = 'Mandy'</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#6272a4">//全域範疇加上var firstName 變數
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">var</span> firstName <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;Mandy&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">const</span> emily <span style="color:#ff79c6">=</span> {
+</span></span><span style="display:flex;"><span>  firstName<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#34;emily&#34;</span>,
+</span></span><span style="display:flex;"><span>  year<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">1993</span>,
+</span></span><span style="display:flex;"><span>  calcAge<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">function</span> () {
+</span></span><span style="display:flex;"><span>    console.log(<span style="color:#ff79c6">this</span>);
+</span></span><span style="display:flex;"><span>    console.log(<span style="color:#bd93f9">2037</span> <span style="color:#ff79c6">-</span> <span style="color:#ff79c6">this</span>.year);
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  greet<span style="color:#ff79c6">:</span> () =&gt; {
+</span></span><span style="display:flex;"><span>    console.log(<span style="color:#f1fa8c">`hey </span><span style="color:#f1fa8c">${</span><span style="color:#ff79c6">this</span>.firstName<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">`</span>);
+</span></span><span style="display:flex;"><span>    console.log(<span style="color:#ff79c6">this</span>);
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>emily.greet();
+</span></span></code></pre></div><p>
+  <img src="bhs6-9.jpeg" alt="">
+
+</p>
+<p>此時會印出 hey Mandy，而原因是因為在第一行 var firstName = &lsquo;Mandy&rsquo;聲明中，<strong>已經在 window 屬性裡添加了 firstName = &lsquo;Mandy&rsquo;的屬性</strong>，所以在這樣的情形下，window 已經有 firstName 這個屬性了。(如下圖)</p>
+<p>
+  <img src="bhs6-10.jpeg" alt="">
+
+</p>
+<p>而與上面例子相同的，當箭頭函式的程式碼執行 this.firstName，this 變數會去指向父層範疇的 this 變數，等同於執行了 window.firstName，而這次就找得到稍早建立的 firstName，所以才印出 Mandy。</p>
+<p>很合理，但又很鬧事吧？所以還是珍惜生命不用 var 的好，另外，盡量避免在方法中使用箭頭函式，選用常規函式也是避免錯誤的好方法。</p>
+<h4 id="-陷阱範例-2">◆ 陷阱範例 2</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff79c6">const</span> emily <span style="color:#ff79c6">=</span> {
+</span></span><span style="display:flex;"><span>  firstName<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#34;emily&#34;</span>,
+</span></span><span style="display:flex;"><span>  year<span style="color:#ff79c6">:</span> <span style="color:#bd93f9">1993</span>,
+</span></span><span style="display:flex;"><span>  calcAge<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">function</span> () {
+</span></span><span style="display:flex;"><span>    console.log(<span style="color:#ff79c6">this</span>);
+</span></span><span style="display:flex;"><span>    console.log(<span style="color:#bd93f9">2037</span> <span style="color:#ff79c6">-</span> <span style="color:#ff79c6">this</span>.year);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">const</span> isMillenial <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">function</span> () {
+</span></span><span style="display:flex;"><span>      console.log(<span style="color:#ff79c6">this</span>);
+</span></span><span style="display:flex;"><span>      console.log(<span style="color:#ff79c6">this</span>.year <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">1981</span> <span style="color:#ff79c6">&amp;&amp;</span> <span style="color:#ff79c6">this</span>.year <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">1996</span>);
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>    isMillenial();
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  greet<span style="color:#ff79c6">:</span> () =&gt; {
+</span></span><span style="display:flex;"><span>    console.log(<span style="color:#f1fa8c">`hey </span><span style="color:#f1fa8c">${</span><span style="color:#ff79c6">this</span>.firstName<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">`</span>);
+</span></span><span style="display:flex;"><span>    console.log(<span style="color:#ff79c6">this</span>);
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>emily.calcAge();
+</span></span></code></pre></div><p>
+  <img src="bhs6-11.jpeg" alt="">
+
+</p>
+<p>在這邊，我們看見 isMillenial 內的 this 變數是 undefined，為什麼？
+因為單純調用函式的 this 變數就是 undefined，就算他在方法內部也一樣。因為 isMillenial()就是簡單調用函式，並沒有附載任何調用對象。</p>
+<p>早期有人認為這是 JavaScript 的錯誤，但其實這樣深入理解後，我們就知道 this 變數一直是依循他原訂的規則在工作。因為 this 變數的被調用的方法之一 ─ 常規函式調用的 this 就是 undefined，完全符合規則。</p>
+<p><strong>＃ES6 之前 解決方案 1</strong>
+在 ES6 之前，這個情形有個有趣的解決方法，就是先把想要的 this 變數存成 self，請看範例(直接擷上例中的 calcAge 函式片段)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#6272a4">//Solution 1
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">const</span> emily <span style="color:#ff79c6">=</span> {
+</span></span><span style="display:flex;"><span>  calcAge<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">function</span> () {
+</span></span><span style="display:flex;"><span>    console.log(<span style="color:#ff79c6">this</span>);
+</span></span><span style="display:flex;"><span>    console.log(<span style="color:#bd93f9">2037</span> <span style="color:#ff79c6">-</span> <span style="color:#ff79c6">this</span>.year);
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">//將this變數存放起來
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">const</span> self <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">this</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">const</span> isMillenial <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">function</span> () {
+</span></span><span style="display:flex;"><span>      console.log(self);
+</span></span><span style="display:flex;"><span>      console.log(self.year <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">1981</span> <span style="color:#ff79c6">&amp;&amp;</span> self.year <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">1996</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#6272a4">//console.log(this.year &gt;= 1981 &amp;&amp; this.year &lt;= 1996)
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    };
+</span></span><span style="display:flex;"><span>    isMillenial();
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>emily.calaAge();
+</span></span></code></pre></div><p>先把 calcAge 的 this 變數存成 self，所以當 emily 調用 calaAge()方法時，func calaAge 中的 this 則是 emily 整個物件，現在已經被存進 self 變數中，而當 func isMillenial 被調用時，因為範疇鏈的關係，會向外去尋找 self 變數，也就找到了我們是先存放好的 self 變數，也就是 emily 整個物件。</p>
+<p>而以上的方法，也被稱為借值(dept)</p>
+<p><strong>＃ES6 之後 解決方案 2 現行解決方法</strong>
+想要透過範疇鏈去取得父層範疇的 this 變數，你有猜到是什麼了嗎？沒錯就是<strong>箭頭函式</strong>！</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#6272a4">//Solution 2
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#ff79c6">const</span> emily <span style="color:#ff79c6">=</span> {
+</span></span><span style="display:flex;"><span>  calcAge<span style="color:#ff79c6">:</span> <span style="color:#8be9fd;font-style:italic">function</span> () {
+</span></span><span style="display:flex;"><span>    console.log(<span style="color:#ff79c6">this</span>);
+</span></span><span style="display:flex;"><span>    console.log(<span style="color:#bd93f9">2037</span> <span style="color:#ff79c6">-</span> <span style="color:#ff79c6">this</span>.year);
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">//用箭頭函式直接取得父層的this變數特性
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">const</span> isMillenial <span style="color:#ff79c6">=</span> () =&gt; {
+</span></span><span style="display:flex;"><span>      console.log(<span style="color:#ff79c6">this</span>);
+</span></span><span style="display:flex;"><span>      console.log(<span style="color:#ff79c6">this</span>.year <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">1981</span> <span style="color:#ff79c6">&amp;&amp;</span> <span style="color:#ff79c6">this</span>.year <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">1996</span>);
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>    isMillenial();
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>emily.calaAge();
+</span></span></code></pre></div><p>
+  <img src="bhs6-12.jpeg" alt="">
+
+</p>
+<p>反正要取得父層範疇的 this 值，乾脆就使用箭頭函式來滿足這個願望，而實際上程式碼也簡潔許多。</p>
+<p>以上，其實在清楚了解 this 變數的調用方法後，就能依不同的情形來搭配不同的函式編寫方式，其實 this 變數一點都不 tricky，相反的他其實很守規矩又很忠心呢~</p>
+<h2 id="-再多一點-take-away參數變數-argument-keyworda-idjump_5a">📌 再多一點 take away：參數變數 argument keyword<!-- raw HTML omitted --><!-- raw HTML omitted --></h2>
+<p>在先前執行環境的變數環境中，我們有談到參數 arguments，而這也是函式可以訪問到的變數之一，所以在 this 筆記的最後，想附帶談一談參數 arguments。</p>
+<p>就像 this 變數一樣，參數 arguments 變數也只有在常規函式中可以使用，讓我們來看看範例。</p>
+<h4 id="-常規函式">◆ 常規函式</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff79c6">const</span> addExpr <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">function</span> (a, b) {
+</span></span><span style="display:flex;"><span>  console.log(arguments);
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">return</span> a <span style="color:#ff79c6">+</span> b;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>addExpr(<span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">5</span>);
+</span></span></code></pre></div><p>
+  <img src="bhs6-13.jpeg" alt="">
+
+</p>
+<p>從 console.log arguments 變數中，我們可以看到我們所傳入的參數，而其實函式比我們所想的函能接受更多的參數，例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff79c6">const</span> addExpr <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">function</span> (a, b) {
+</span></span><span style="display:flex;"><span>  console.log(arguments);
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">return</span> a <span style="color:#ff79c6">+</span> b;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>addExpr(<span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">5</span>, <span style="color:#bd93f9">5</span>, <span style="color:#bd93f9">6</span>, <span style="color:#bd93f9">7</span>, <span style="color:#bd93f9">8</span>);
+</span></span></code></pre></div><p>
+  <img src="bhs6-14.jpeg" alt="">
+
+</p>
+<p>搭啷~ 雖然我們從來都只有在函式內傳入相應的參數，但其實添加更多的參數是完全合法的，而且我們還「可以」應用所傳入的這些參數！例如使用 loop 循環，遍歷這些數值，讓數字相加等應用。</p>
+<h4 id="-箭頭函式">◆ 箭頭函式</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff79c6">const</span> addExpr <span style="color:#ff79c6">=</span> (a, b) =&gt; {
+</span></span><span style="display:flex;"><span>  console.log(arguments);
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">return</span> a <span style="color:#ff79c6">+</span> b;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>addExpr(<span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">5</span>);
+</span></span></code></pre></div><p>
+  <img src="bhs6-15.jpeg" alt="">
+
+</p>
+<p>而在箭頭函式中，我們得到了 undefined。因為參數關鍵字(arguments)只存在常規函式中(函式陳述句、函式表示式皆同)，只有在箭頭函式中沒有。</p>
+<p>但在現行 JavaScript 中，參數關鍵字(arguments)已經沒有以前重要了，但我們還是可以知道有這個變數的存在。而我們也就更知道了常規函式與箭頭函式間的區別，也就更知道在什麼時機選用什麼方法。</p>
+<p>以上，有沒有覺得 this 變數好像也沒這麼 tricky 了呢？
+其實 this 就是一個很死心踏地的忠臣耶。</p>
+<p><strong><!-- raw HTML omitted -->JavaScript 深度旅遊系列<!-- raw HTML omitted --></strong></p>
+<p><a href="https://emilycodeee.github.io/JS-1/">JS#1：JavaScript 運作原理 ─ 深入研究之前，先了解全局</a>
+<a href="https://emilycodeee.github.io/JS-2/">JS#2：JavaScript 引擎與 JavaScript 的運行環境 ─ 什麼？JavaScript 早就不只是直譯式語言了？！</a>
+<a href="https://emilycodeee.github.io/JS-3/">JS#3：JavaScript 的執行原理，Javascript 的執行環境 (Execution context) 與執行堆疊 (Call Stack)</a>
+<a href="https://emilycodeee.github.io/JS-4/">JS#4：Javascript 的範疇/作用域（Scope）與範疇鏈 （Scope Chain）變數查找（variable lookup）</a>
+<a href="https://emilycodeee.github.io/JS-5/">JS#5：優先認可 變數提升 Hoisting？暫時死區(Temporal Dead Zone) ─ const、let、var 的小祕密</a></p>
+
+
+                
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/js_basic_5/" data-toggle="tooltip" data-placement="top" title="JS#5：優先認可 變數提升Hoisting？暫時死區(Temporal Dead Zone) ─ const、let、var 的小祕密">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/coding_now/" data-toggle="tooltip" data-placement="top" title="【以終為始】相信自己進步的力量！於是後來，我成為了前端工程師，但我想說更多的是，以前...">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+                
+
+                
+
+
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/javascript" title="javascript">
+                            javascript
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/%E5%89%8D%E7%AB%AF" title="前端">
+                            前端
+                        </a>
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+                <section>
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+                        
+                        <li><a target="_blank" href="https://emilywalkdone.blogspot.com/">我的食旅生活</a></li>
+                        
+                    </ul>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">                  
+                    
+                    <li>
+                        <a href="mailto:emilydondon@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+		            
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/emilycodeee">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/emily-chen-emilydondon">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            <li>
+                <a target="_blank" href="https://www.instagram.com/emilydondon/">
+                    <span class="fa-stack fa-lg">
+                        <i class="fas fa-circle fa-stack-2x"></i>
+                        <i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
+                    </span>
+                </a>
+            </li>
+            
+            
+           
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Emily is coding" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fas fa-circle fa-stack-2x"></i>
+                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+            
+             </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Emily is coding 2023
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a> |
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+</body>
+</html>

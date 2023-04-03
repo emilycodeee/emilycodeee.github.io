@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>vue on Emily is coding</title>
+    <link>https://emilycodeee.github.io/tags/vue/</link>
+    <description>Recent content in vue on Emily is coding</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-tw</language>
+    <lastBuildDate>Sun, 27 Mar 2022 18:29:38 +0000</lastBuildDate><atom:link href="https://emilycodeee.github.io/tags/vue/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>【前端框架】Vue &amp; React 初開發比較與心得</title>
+      <link>https://emilycodeee.github.io/post/vue_and_react/</link>
+      <pubDate>Sun, 27 Mar 2022 18:29:38 +0000</pubDate>
+      
+      <guid>https://emilycodeee.github.io/post/vue_and_react/</guid>
+      <description>前言 既先前以 React 開發個人專案後，最近因為新工作需要使用 Vue ，所以轉而學習 Vue 開發，在這篇文章中會記錄我所感受與理解的 React 與 Vue 之間的差別。 📌 Vue 與 React 的共</description>
+    </item>
+    
+  </channel>
+</rss>
