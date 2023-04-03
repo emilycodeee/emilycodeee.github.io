@@ -2,8 +2,7 @@
 title: JS#4：Javascript 的範疇/作用域（Scope）與範疇鏈 （Scope Chain）變數查找（variable lookup）
 date: 2022-08-06 11:05:22
 tags: ["前端", "javascript"]
-# categories:
-#   - [Javascript]
+categories: ["Tech"]
 ---
 
 ![](bhs4.jpeg)

@@ -2,8 +2,7 @@
 title: JS#6：一點都不tricky，其實很忠心！''this'' is fun 物件引用 this變數與應用範例
 date: 2022-08-06 12:22:33
 tags: ["前端", "javascript"]
-# categories:
-#   - [Javascript]
+categories: ["Tech"]
 ---
 
 ![](bhs6.jpeg)

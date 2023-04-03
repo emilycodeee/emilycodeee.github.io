@@ -13,7 +13,7 @@ outputs:
     - RSS
     - Algolia
 params:
-  header_image: img/home-bg-jeep.jpg
+  header_image: img/sky.jpg
   SEOTitle: Emilydondon Blog
   description: ''
   keyword: 
@@ -28,15 +28,15 @@ params:
   algolia_appId: ''
   algolia_indexName: ''
   algolia_apiKey: ''
-  sidebar_about_description: 'Front-End Developer and Life Adventurer'
-  # sidebar_avatar: img/emily.jpg
+  sidebar_about_description: 'Front-End Developer and Life Adventurer 喜歡程式、喜歡看書寫字，目標是能寫出老嫗能解的程式碼'
+  sidebar_avatar: img/emily.jpg
   featured_tags: true
   featured_condition_size: 1
   ba_track_id: ''
   disqus_proxy: ''
   disqus_site: ''
   twikoo_env_id: ''
-  reward: true
+  # reward: true
   friends: true
   bookmarks: true
   about_me: true
@@ -46,15 +46,15 @@ params:
     linkedin: 'https://www.linkedin.com/in/emily-chen-emilydondon'
     # stackoverflow: 'https://stackoverflow.com/users/yourstackoverflowid'
     github: 'https://github.com/emilycodeee'
-    # wechat: your wechat qr code image
-  # friend_link:
-  #   - title: Linda的博客
-  #     href: 'https://zhaozhihan.com'
+    instagram: 'https://www.instagram.com/emilydondon/'
+  friend_link:
+    - title: 我的食旅生活
+      href: 'https://emilywalkdone.blogspot.com/'
   bookmark_link:
-    # - title: Martin Fowler
-    #   href: 'https://martinfowler.com'
-    # - title: ServiceMesher
-    #   href: 'http://www.servicemesher.com'
+    - title: 愛門莉的旅途留聲
+      href: 'https://emilywalkdone.blogspot.com/'
+    - title: 共學、互助成長 Let's Share More
+      href: 'https://sharemore-discovermore.web.app/'
     # - title: Pxhere
     #   href: 'https://pxhere.com'
     # - title: unsplash

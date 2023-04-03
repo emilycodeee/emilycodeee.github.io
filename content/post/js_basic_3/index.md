@@ -2,8 +2,7 @@
 title: JS#3：JavaScript的執行原理，Javascript 的執行環境 (Execution context) 與執行堆疊 (Call Stack)
 date: 2022-08-06 10:18:27
 tags: ["前端", "javascript"]
-# categories:
-#   - [Javascript]
+categories: ["Tech"]
 ---
 
 ![](bhs3.jpeg)
