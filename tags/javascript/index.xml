@@ -6,7 +6,16 @@
     <description>Recent content in javascript on Emily is coding</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-tw</language>
-    <lastBuildDate>Sat, 06 Aug 2022 12:22:33 +0000</lastBuildDate><atom:link href="https://emilycodeee.github.io/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 04 Jan 2023 21:26:41 +0000</lastBuildDate><atom:link href="https://emilycodeee.github.io/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>JavaScript：&amp;&amp; and || operators 邏輯運算符</title>
+      <link>https://emilycodeee.github.io/post/js_shortcuiting/</link>
+      <pubDate>Wed, 04 Jan 2023 21:26:41 +0000</pubDate>
+      
+      <guid>https://emilycodeee.github.io/post/js_shortcuiting/</guid>
+      <description>運算值的結果並非永遠都是布林值 邏輯運算值的三個屬性 1.他們可以使用任何數據類型 2.他們可以return任何數據類型，我們稱它為短路(shor</description>
+    </item>
+    
     <item>
       <title>JS#6：一點都不tricky，其實很忠心！&#39;&#39;this&#39;&#39; is fun 物件引用 this變數與應用範例</title>
       <link>https://emilycodeee.github.io/post/js_basic_6/</link>
