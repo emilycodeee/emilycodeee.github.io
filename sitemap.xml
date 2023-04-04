@@ -2,37 +2,43 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://emilycodeee.github.io/post/coding_now/</loc>
-    <lastmod>2023-04-01T11:29:38+00:00</lastmod>
-  </url><url>
     <loc>https://emilycodeee.github.io/categories/</loc>
-    <lastmod>2023-04-01T11:29:38+00:00</lastmod>
+    <lastmod>2023-04-03T11:29:38+00:00</lastmod>
+  </url><url>
+    <loc>https://emilycodeee.github.io/post/hugo_cicd_deploy/</loc>
+    <lastmod>2023-04-03T11:29:38+00:00</lastmod>
   </url><url>
     <loc>https://emilycodeee.github.io/</loc>
+    <lastmod>2023-04-03T11:29:38+00:00</lastmod>
+  </url><url>
+    <loc>https://emilycodeee.github.io/tags/hugo/</loc>
+    <lastmod>2023-04-03T11:29:38+00:00</lastmod>
+  </url><url>
+    <loc>https://emilycodeee.github.io/tags/javascript/</loc>
+    <lastmod>2023-04-03T11:29:38+00:00</lastmod>
+  </url><url>
+    <loc>https://emilycodeee.github.io/post/</loc>
+    <lastmod>2023-04-03T11:29:38+00:00</lastmod>
+  </url><url>
+    <loc>https://emilycodeee.github.io/tags/</loc>
+    <lastmod>2023-04-03T11:29:38+00:00</lastmod>
+  </url><url>
+    <loc>https://emilycodeee.github.io/categories/tech/</loc>
+    <lastmod>2023-04-03T11:29:38+00:00</lastmod>
+  </url><url>
+    <loc>https://emilycodeee.github.io/tags/%E5%89%8D%E7%AB%AF/</loc>
+    <lastmod>2023-04-03T11:29:38+00:00</lastmod>
+  </url><url>
+    <loc>https://emilycodeee.github.io/post/coding_now/</loc>
     <lastmod>2023-04-01T11:29:38+00:00</lastmod>
   </url><url>
     <loc>https://emilycodeee.github.io/categories/life/</loc>
     <lastmod>2023-04-01T11:29:38+00:00</lastmod>
   </url><url>
-    <loc>https://emilycodeee.github.io/post/</loc>
-    <lastmod>2023-04-01T11:29:38+00:00</lastmod>
-  </url><url>
-    <loc>https://emilycodeee.github.io/tags/</loc>
-    <lastmod>2023-04-01T11:29:38+00:00</lastmod>
-  </url><url>
     <loc>https://emilycodeee.github.io/tags/%E7%94%9F%E6%B4%BB/</loc>
     <lastmod>2023-04-01T11:29:38+00:00</lastmod>
   </url><url>
-    <loc>https://emilycodeee.github.io/tags/javascript/</loc>
-    <lastmod>2023-01-04T21:26:41+00:00</lastmod>
-  </url><url>
     <loc>https://emilycodeee.github.io/post/js_shortcuiting/</loc>
-    <lastmod>2023-01-04T21:26:41+00:00</lastmod>
-  </url><url>
-    <loc>https://emilycodeee.github.io/categories/tech/</loc>
-    <lastmod>2023-01-04T21:26:41+00:00</lastmod>
-  </url><url>
-    <loc>https://emilycodeee.github.io/tags/%E5%89%8D%E7%AB%AF/</loc>
     <lastmod>2023-01-04T21:26:41+00:00</lastmod>
   </url><url>
     <loc>https://emilycodeee.github.io/post/js_basic_6/</loc>
@@ -63,6 +69,8 @@
     <lastmod>2022-03-27T18:29:38+00:00</lastmod>
   </url><url>
     <loc>https://emilycodeee.github.io/search/placeholder/</loc>
+  </url><url>
+    <loc>https://emilycodeee.github.io/tags/ci/cd/</loc>
   </url><url>
     <loc>https://emilycodeee.github.io/search/</loc>
   </url>

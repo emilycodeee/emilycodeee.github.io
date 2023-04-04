@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CI/CD on Emily is coding</title>
+    <link>https://emilycodeee.github.io/tags/ci/cd/</link>
+    <description>Recent content in CI/CD on Emily is coding</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-tw</language><atom:link href="https://emilycodeee.github.io/tags/ci/cd/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CI/CD:Hugo Site部署至Github page - 從私有庫 private repo部署至公開庫 public repo</title>
+      <link>https://emilycodeee.github.io/post/hugo_cicd_deploy/</link>
+      <pubDate>Mon, 03 Apr 2023 11:29:38 +0000</pubDate>
+      
+      <guid>https://emilycodeee.github.io/post/hugo_cicd_deploy/</guid>
+      <description>一直盤算了許久要將技術筆記的內容從原本的食旅部落格分離出來，先前使用hexo 但 hexo 一段時間沒用套件要再更新，而 hugo 很棒的一點是因為架構的關係，任</description>
+    </item>
+    
+  </channel>
+</rss>

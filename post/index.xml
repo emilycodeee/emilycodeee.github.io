@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Emily is coding</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-tw</language>
-    <lastBuildDate>Sat, 01 Apr 2023 11:29:38 +0000</lastBuildDate><atom:link href="https://emilycodeee.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 03 Apr 2023 11:29:38 +0000</lastBuildDate><atom:link href="https://emilycodeee.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CI/CD:Hugo Site部署至Github page - 從私有庫 private repo部署至公開庫 public repo</title>
+      <link>https://emilycodeee.github.io/post/hugo_cicd_deploy/</link>
+      <pubDate>Mon, 03 Apr 2023 11:29:38 +0000</pubDate>
+      
+      <guid>https://emilycodeee.github.io/post/hugo_cicd_deploy/</guid>
+      <description>一直盤算了許久要將技術筆記的內容從原本的食旅部落格分離出來，先前使用hexo 但 hexo 一段時間沒用套件要再更新，而 hugo 很棒的一點是因為架構的關係，任</description>
+    </item>
+    
     <item>
       <title>【以終為始】相信自己進步的力量！於是後來，我成為了前端工程師，但我想說更多的是，以前...</title>
       <link>https://emilycodeee.github.io/post/coding_now/</link>

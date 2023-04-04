@@ -6,7 +6,16 @@
     <description>Recent content in javascript on Emily is coding</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-tw</language>
-    <lastBuildDate>Wed, 04 Jan 2023 21:26:41 +0000</lastBuildDate><atom:link href="https://emilycodeee.github.io/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 03 Apr 2023 11:29:38 +0000</lastBuildDate><atom:link href="https://emilycodeee.github.io/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CI/CD:Hugo Site部署至Github page - 從私有庫 private repo部署至公開庫 public repo</title>
+      <link>https://emilycodeee.github.io/post/hugo_cicd_deploy/</link>
+      <pubDate>Mon, 03 Apr 2023 11:29:38 +0000</pubDate>
+      
+      <guid>https://emilycodeee.github.io/post/hugo_cicd_deploy/</guid>
+      <description>一直盤算了許久要將技術筆記的內容從原本的食旅部落格分離出來，先前使用hexo 但 hexo 一段時間沒用套件要再更新，而 hugo 很棒的一點是因為架構的關係，任</description>
+    </item>
+    
     <item>
       <title>JavaScript：&amp;&amp; and || operators 邏輯運算符</title>
       <link>https://emilycodeee.github.io/post/js_shortcuiting/</link>

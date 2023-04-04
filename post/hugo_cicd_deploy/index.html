@@ -15,9 +15,9 @@
     
 
     
-    <meta name="title" content="JS#1：JavaScript運作原理 ─ 深入研究之前，先了解全局" />
-    <meta property="og:title" content="JS#1：JavaScript運作原理 ─ 深入研究之前，先了解全局" />
-    <meta property="twitter:title" content="JS#1：JavaScript運作原理 ─ 深入研究之前，先了解全局" />
+    <meta name="title" content="CI/CD:Hugo Site部署至Github page - 從私有庫 private repo部署至公開庫 public repo" />
+    <meta property="og:title" content="CI/CD:Hugo Site部署至Github page - 從私有庫 private repo部署至公開庫 public repo" />
+    <meta property="twitter:title" content="CI/CD:Hugo Site部署至Github page - 從私有庫 private repo部署至公開庫 public repo" />
     
 
     
@@ -34,9 +34,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>JS#1：JavaScript運作原理 ─ 深入研究之前，先了解全局 | Emilydondon Blog</title>
+    <title>CI/CD:Hugo Site部署至Github page - 從私有庫 private repo部署至公開庫 public repo | Emilydondon Blog</title>
 
-    <link rel="canonical" href="/post/js_basic_1/">
+    <link rel="canonical" href="/post/hugo_cicd_deploy/">
 
     
     
@@ -176,8 +176,16 @@
                             javascript
                         </a>
                         
+                        <a class="tag" href="/tags/ci/cd" title="CI/CD">
+                            CI/CD
+                        </a>
+                        
+                        <a class="tag" href="/tags/hugo" title="Hugo">
+                            Hugo
+                        </a>
+                        
                     </div>
-                    <h1>JS#1：JavaScript運作原理 ─ 深入研究之前，先了解全局</h1>
+                    <h1>CI/CD:Hugo Site部署至Github page - 從私有庫 private repo部署至公開庫 public repo</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         
@@ -186,7 +194,7 @@
                                     Emily is coding
                              
                             on 
-                            Thursday, August 4, 2022
+                            Monday, April 3, 2023
                             
                             
                             
@@ -212,84 +220,164 @@
                 post-container">
 
                 
-                <p>
-  <img src="main.jpeg" alt="">
+                <p>一直盤算了許久要將技術筆記的內容從原本的食旅部落格分離出來，先前使用<code>hexo</code> 但 <code>hexo</code> 一段時間沒用套件要再更新，而 hugo 很棒的一點是因為架構的關係，任何 markdown 的文件都會自動變成一個靜態網頁，讓內容的生成變得非常容易，所以這次就使用 hugo 來建制，從hexo搬遷過來非常無痛。</p>
+<p>而這一次也特別嘗試了CICD的自動化部署設定，將程式碼推送至私有庫，再部署至公開庫的github page上，嘗試幾個小時的錯誤，這邊也紀錄下來設置筆記。</p>
+<p>首先我們會需要兩個repo，一個私有的repo（用於存放資源程式碼檔案）、一個公開的repo（用於存放hugo指令生成出來的靜態網站資料夾，通常是public）</p>
+<ul>
+<li>Source Repo：存放資源程式碼的私有repo</li>
+<li>Target Repo：部署至GitHub Page的公開repo(xxx.github.io)</li>
+</ul>
+<h3 id="首先創建pat">首先：創建PAT</h3>
+<p>PAT(Personal Access Token)</p>
+<blockquote>
+<p>Personal access tokens (PATs) are an alternative to using passwords for authentication to GitHub Enterprise Server when using the GitHub API or the command line.</p>
+</blockquote>
+<p>創建PAT的主要目的主要是給私有repo訪問目標repo的權限，讓私有repo的actions可以將創建好的程式碼推送到目標庫裡。可以參考<a href="https://docs.github.com/en/enterprise-server@3.4/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">Github docs</a></p>
+<blockquote>
+<p>Profile Photo -&gt; Settings -&gt; Developer settings -&gt; Personal access tokens -&gt; Tokens(classic) &gt; Generate new token</p>
+</blockquote>
+<p>
+  <img src="cicd_1.jpg" alt="">
 
 </p>
-<p>在結束 Alpha Camp 第二階段的課程後，也開始尋找其他線上的學習資源，而在眾多推薦下購買了 Jonas Schmedtmann 在 Udemy 上的課程-<a href="https://www.udemy.com/course/the-complete-javascript-course/">The Complete JavaScript Course 2021: From Zero to Expert! </a>想深入了解 JavaScript，接下來這一系列文章，將作為深入理解 JavaScript 運作原理的學習筆記，記下那些我未曾注意過的 JavaScript 細節。同時真的也要在開頭先大推 Jonas 的課，比喻相當好理解，也會同步示範各種不同的範例，真的非常划算！</p>
-<!-- raw HTML omitted -->
-<h2 id="-high-level-高階語言">📌 High-level 高階語言</h2>
-<p>首先，所有在電腦上執行的程式都需要記憶體或 CPU 這一類的硬體資源來讓他們得以運作，而像低階程式語言(例如：C 語言)需要手動管理存放資源，例如以 malloc() 跟 free() 等低階函式來控管記憶體權限，而高階語言(例如：JavaScript、Python)則因為抽象化(Abstraction)的特性，讓我們可以省去這些麻煩的指定步驟，也因為更接近人類的語言而更易於學習，但缺點就是程式效率永遠不如低階語言的快速。</p>
-<p><strong>抽象化的意義</strong>在 <a href="https://developer.mozilla.org/zh-TW/docs/conflicting/Learn/JavaScript/Objects/Classes_in_JavaScript">MDN</a> 裡，有著這樣的解釋：</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<h2 id="-garbage-collected-回收機制">📌 Garbage-collected 回收機制</h2>
-<p>相較於低階語言必須手動管理記憶體，當 JavaScript 宣告變數時，就會自動分配空間並移除不再使用的物件以釋放儲存空間，而這就稱為回收機制（garbage-collected）。但這個自動化的回收流程，也往往會使開發人員產生不用理會「記憶體管理」的錯誤認知。</p>
-<p>當我們談到程式語言，共有的記憶體生命週期認知，幾乎是一樣的。</p>
-<ol>
-<li>配置你的程式所需的記憶體空間</li>
-<li>使用配置到的記憶體空間(讀，寫)</li>
-<li>當不再使用時，釋放已被配置的記憶體空間</li>
-</ol>
-<p>而除去第二點是確定的外(執行)，第一、第三點，在手動管理存放資源的低階語言是確定的，但是在高階語言，例如：Javascript 則是相對較不明確的，其中最大的問題就在於 ─ 如何找到「已不再被使用的記憶體配置空間」</p>
-<p><strong>垃圾回收器(garbage collector)</strong></p>
-<p>在 Javascript 中，有一個垃圾回收器(garbage collector)，他的工作就是追蹤記憶體的分配情形，來盡量達到「釋放」不再使用的記憶體空間任務。</p>
-<p>但由於自動判斷不再使用記憶體空間這件事其實本質上是「不可判定的」，因為你要如何去確認他不會再被使用呢？而面對這樣的問題，就衍生出 Reference-counting garbage collection 作為演算法機制，也就是把「這個物件再也不會被使用」的較廣定義限縮為「沒有其他物件需要再訪問這個物件」也就是「相對」而言不被需要的認定方式來作為判斷依據，以將他視為可回收記憶體的垃圾。<a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Memory_Management">MDN：Reference-counting garbage collection 範例</a></p>
-<!-- raw HTML omitted -->
-<h2 id="-interpreted-or-just-in-time-compiled">📌 Interpreted or just-in-time compiled</h2>
-<p>從抽象語言轉換為機器語言的方法，而 JavaScript 是一個直譯語言，或更應該說是 Just-in-time compilation 即時編譯語言。</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<h2 id="-multi-paradigm-多範式語言">📌 Multi-paradigm 多範式語言</h2>
-<p>和 C++語言一樣，JavaScript 語言是一個多範式語言，所謂**範式(paradigm)**是一種建構程式碼的方式和整體思維方式，取決於編碼的風格和技術。</p>
-<p>其中 JavaScript 分別支援 Procedural programming(指令式程式設計)、Object-oriented programming (OOP)(物件導向程式設計)、Functional programming (FP)(函式程式設計)，除此之外，也可以總的分為 Imperative(命令式)或 Declarative(聲明式)。</p>
-<p>而其實很多程式語言都只支援某一種類的程式設計(例如：OOP、PP、FP)，但對 Javascript 而言，卻是可以三種混合使用，可見 JavaScript 的靈活性與通用性。(所以讓我們可以想幹嘛就幹嘛 (大誤</p>
-<!-- raw HTML omitted -->
-<h2 id="-prototype-based基於原型-object-oriented-物件導向">📌 Prototype-based(基於原型) object-oriented (物件導向)</h2>
-<p>首先，幾乎除了原始值(primitive values)，例如：數字、字串以外，在 JavaScript 裡的所有元件都可以被視為一個物件(例如：陣列、物件、函式)，這也是為什麼他們可以被視為獨立元件，也可以互相被呼叫或使用。</p>
-<p>而要介紹何謂基於原型 Prototype-based，我們可以以常見的陣列操作來比喻
-例如陣列中的 push 方法，(為什麼用 push 就可以改變陣列?)
-這是因為原型繼承（prototypal inheritance）</p>
-<p>當我們創建一個陣列，我們是從一個叫做**陣列藍圖(array blueprint)**的模板基礎上創建陣列的，也就是所謂的原型（Prototype）(不然他怎麼可以隨隨便便生成陣列？對吧？)</p>
-<p>而這樣的陣列藍圖，包含了所有陣列的方法，所以我們有了陣列後，可以輕鬆使用例如使用 array.push()、array.pull()等，去操作陣列，這是因為在使用陣列藍圖時，也就繼承（inherit）了藍圖上的操作方法(method)。但當然這只是簡單介紹，未來有機會會再深入這個議題去討論。</p>
-<h2 id="-first-class-functions-一級函式">📌 First-class functions 一級函式</h2>
-<!-- raw HTML omitted -->
-<p>一級函式簡言之，也就是在該程式語言中，函式可以被視為「變數」被當作參數傳遞到另一個函式，或在另一個函式中被當作回傳值（return），或被當作值一般，被指定到一個變數當中，或也可以被放置在物件中。</p>
-<p>而這樣的一級函式並不是只有 JavaScript 專屬的特性，但因為 JavaScript 有，所以 JavaScript hen 棒。而這也是多範式語言中的其中一項 Functional programming (FP)(函式程式設計)。</p>
-<p>所謂函示可以被視為變數傳遞，讓我們看以下範例</p>
-<p>範例：Modal</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff79c6">const</span> closeModal <span style="color:#ff79c6">=</span> () =&gt; {
-</span></span><span style="display:flex;"><span>  modal.classList.add(<span style="color:#f1fa8c">&#34;hidden&#34;</span>);
-</span></span><span style="display:flex;"><span>  overlay.classList.add(<span style="color:#f1fa8c">&#34;hidden&#34;</span>);
-</span></span><span style="display:flex;"><span>};
-</span></span><span style="display:flex;"><span>overlay.addEventListener(<span style="color:#f1fa8c">&#34;click&#34;</span>, closeModal);
-</span></span></code></pre></div><ul>
-<li>註 1：不是 closeModal() ，因為這樣一來 closeModal 會馬上被執行，而不是等到觸發&quot;click&quot;事件才被執行</li>
-<li>註 2：傳入 closeModal，就是函式被作為一個單純的參數被傳入其中！</li>
-</ul>
-<h2 id="-dynamic-動態類型語言">📌 Dynamic 動態類型語言</h2>
-<!-- raw HTML omitted -->
-<p>在 JavaScript 中，我們不會去指定資料類型(例如數字、字串等)，而是當 JavaScript 引擎執行代碼時自動辨認該資料類型，於是當我們為變數重新賦值時，資料類型又可以自動且輕易地轉換，這就是動態類型(dynamically-typed)的意義。簡言之，就是允許動態轉換。</p>
-<p>範例：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">let</span> x <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">23</span>;
-</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">let</span> y <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">19</span>;
-</span></span><span style="display:flex;"><span>x <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;Emily&#34;</span>;
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">// x 從原本的 number，轉換為 string
-</span></span></span></code></pre></div><p>而談到動態語言，相較於 JavaScript，其他需要手動定義類型的語言(例如：C、Java)則可以避免動態轉換所造成的各種錯誤，而這也是為什麼許多人說，JavaScript 應該強化類型的原因，因為很容易發生錯誤。而如果想要使用類型版的 JavaScript，可以學習 TypeScript</p>
-<h2 id="-single-threaded-單執行序-non-blocking-event-loop-非阻塞事件循環">📌 Single-threaded 單執行序 Non-blocking event loop 非阻塞事件循環</h2>
-<!-- raw HTML omitted -->
-<p>首先我們需要先了解 JavaScript 是單執行序，也就是一次只能執行一件事情，但若遇上需要同時間處理多項事件該怎麼辦呢？這就需要併發模型（concurrency model）來處理安排多工的情形。</p>
-<p>而要達到這樣的效果，就需要事件循環（event loop）的幫助，也就是先在後台執行任務，並當執行完畢後，再將他們重新放回主線程上，這就是 JavaScript 的單線程非阻塞事件循環併發模型。(JavaScript&rsquo;s non-blocking event loop concurrency model with a single thread.)，說起來超饒口，只是先有一個基本印象，會在接下來逐一單元筆記整理。</p>
-<p>這篇文章，只是做為整個 JavaScript 重點概觀的一個紀錄，接下來，將會依照課程的進行，依序記錄重點細節，如果你跟我依樣初學 JavaScript，真的很推薦在 Udemy 上購買 Jonas 的課 JavaScript zero to expert！雖然已經從初學 Javascript 到可以應用 node.js，但跟著每一小節學習，仍讓我看見之前從未注意到的細節，也學習了 Jonas 的編寫習慣，來讓自己成為更好的開發人員與學習者。</p>
-<p>也歡迎跟著我對於 How javascript works behind the senes 筆記，一起逐步深入了解 Javascript 的原理喔！</p>
-<p><strong><!-- raw HTML omitted -->JavaScript 深度旅遊系列<!-- raw HTML omitted --></strong></p>
+<p>其中有兩個一定要勾選的scope權限 <code>workflow</code> 和 <code>write:packages</code>.</p>
+<p>並且要注意這個token是一個涵蓋整個帳號使用的token，更好的作法是使用repo庫層級的token-deploy key，方法類似。</p>
+<h3 id="在私有repo中設置secret">在私有repo中設置Secret</h3>
+<p>在私有repo中設定 &gt; Settings -&gt; Secrets -&gt; Actions -&gt; New repository secret</p>
+<p>將剛剛生成的PAT TOKEN黏貼到value，並為此命名個SECRETNAME</p>
+<p>
+  <img src="cicd_2.jpg" alt="">
+
+</p>
+<h3 id="私有庫cicd檔配置-創建workflow">私有庫：CICD檔配置-創建workflow</h3>
+<p>在根目錄下創建一個 <code>.github</code> 資料夾，並在<code>.github</code> 資料夾內部創建 <code>workflows</code> 資料夾，創建一個檔案 <code>hugo.yaml</code></p>
+<p><strong>workflow</strong></p>
 <ul>
-<li><a href="https://emilycodeee.github.io/JS-1/">JS#1：JavaScript 運作原理 ─ 深入研究之前，先了解全局</a></li>
-<li><a href="https://emilycodeee.github.io/JS-2/">JS#2：JavaScript 引擎與 JavaScript 的運行環境 ─ 什麼？JavaScript 早就不只是直譯式語言了？！</a></li>
-<li><a href="https://emilycodeee.github.io/JS-3/">JS#3：JavaScript 的執行原理，Javascript 的執行環境 (Execution context) 與執行堆疊 (Call Stack)</a></li>
-<li><a href="https://emilycodeee.github.io/JS-4/">JS#4：Javascript 的範疇/作用域（Scope）與範疇鏈 （Scope Chain）變數查找（variable lookup）</a></li>
-<li><a href="https://emilycodeee.github.io/JS-5/">JS#5：優先認可 變數提升 Hoisting？暫時死區(Temporal Dead Zone) ─ const、let、var 的小祕密</a></li>
+<li>Checkout: 拉取程式碼</li>
+<li>Setup Hugo: 配置Hugo構建環境</li>
+<li>Run Hugo: 構建網站</li>
+<li>Deploy: 用 GitHub Pages Deploy Action 將網站發佈到目標公開</li>
 </ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ff79c6">name</span>: Hugo Build &amp; Deploy - Private to Public
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">on</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">push</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">branches</span>: [ main ] 
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">jobs</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">build</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">runs-on</span>: ubuntu-latest
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">steps</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ff79c6">name</span>: Checkout
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">uses</span>: actions/checkout@v2.3.4
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">with</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">persist-credentials</span>: <span style="color:#ff79c6">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># Setup Hugo</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ff79c6">name</span>: Hugo setup
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">uses</span>: peaceiris/actions-hugo@v2.5.0
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">with</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">hugo-version</span>: <span style="color:#f1fa8c">&#39;latest&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># Download (if necessary) and use Hugo extended version. Example: true</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">extended</span>: <span style="color:#ff79c6">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># Runs Hugo to build the Static Site</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ff79c6">name</span>: Run Hugo
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">run</span>: |<span style="color:#f1fa8c">
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">                hugo --verbose</span>                
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># Deploy the Static Site to Public Repo (GitHub Pages)</span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#ff79c6">name</span>: Deploy
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">uses</span>: JamesIves/github-pages-deploy-action@v4.3.3
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">with</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">token</span>: ${{ secrets.SECRETNAME }}
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">repository-name</span>: XXXX/XXXX.github.io
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">branch</span>: main <span style="color:#6272a4"># The branch the action should deploy to.</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">folder</span>: public <span style="color:#6272a4"># The folder the action should deploy.</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">single-commit</span>: <span style="color:#ff79c6">true</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">commit-message</span>: <span style="color:#f1fa8c">&#34;Deploy by source&#34;</span>
+</span></span></code></pre></div><p><strong>。branches: [ main ]</strong></p>
+<p>action觸發條件，當push到main分支上時觸發。</p>
+<p><strong>。token: ${{ secrets.SECRETNAME }}</strong></p>
+<p>這裡的SECRETNAME為先前創建好的PAT<strong>名稱</strong></p>
+<p><strong>。repository-name</strong></p>
+<p>xxx/xxx.github.io:要公開部署的repo庫位址，也就是GitHub Page庫的地址</p>
+<p><strong>。folder</strong></p>
+<p>要傳送至公開庫檔案的檔案路徑</p>
+<h3 id="公開庫設定部署來源">公開庫：設定部署來源</h3>
+<p><strong>部署設定</strong></p>
+<p>設定Page的部署方式是github原先設定的抓取主分支檔案。</p>
+<p>而之所以公開庫裡面會被自動寫入檔案，歸功於先前我們在私有庫yaml檔裡設定的指向路徑public檔案夾裡的靜態檔案，在每一次我們push上私有庫後，就會被傳送進來，而之後就會被github的設定自動部署。</p>
+<p>
+  <img src="cicd_3.jpg" alt="">
+
+</p>
+<h3 id="流程說明">流程說明</h3>
+
+<link rel="stylesheet" href="/css/hugo-easy-gallery.css" />
+<div class="box" >
+  <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <div class="img">
+      <img itemprop="thumbnail" src="/post/hugo_cicd_deploy/cicd_4.jpg" alt="異動推上私有庫後action，將public路徑裡的檔案送至公開庫"/>
+    </div>
+    <a href="/post/hugo_cicd_deploy/cicd_4.jpg" target="_blank" itemprop="contentUrl"></a>
+      <figcaption align="center">
+          <p>異動推上私有庫後action，將public路徑裡的檔案送至公開庫</p>
+      </figcaption>
+  </figure>
+</div>
+
+
+
+<div class="box" >
+  <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <div class="img">
+      <img itemprop="thumbnail" src="/post/hugo_cicd_deploy/cicd_7.jpg" alt="私有庫裡的public夾"/>
+    </div>
+    <a href="/post/hugo_cicd_deploy/cicd_7.jpg" target="_blank" itemprop="contentUrl"></a>
+      <figcaption align="center">
+          <p>私有庫裡的public夾</p>
+      </figcaption>
+  </figure>
+</div>
+
+
+
+<div class="box" >
+  <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <div class="img">
+      <img itemprop="thumbnail" src="/post/hugo_cicd_deploy/cicd_5.jpg" alt="私有庫將public檔案置入公開庫，並透過github設定的pages build deployment開始自動重整部署"/>
+    </div>
+    <a href="/post/hugo_cicd_deploy/cicd_5.jpg" target="_blank" itemprop="contentUrl"></a>
+      <figcaption align="center">
+          <p>私有庫將public檔案置入公開庫，並透過github設定的pages build deployment開始自動重整部署</p>
+      </figcaption>
+  </figure>
+</div>
+
+
+
+<div class="box" >
+  <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <div class="img">
+      <img itemprop="thumbnail" src="/post/hugo_cicd_deploy/cicd_6.jpg" alt="公開庫裡的檔案就是生成好的靜態內容"/>
+    </div>
+    <a href="/post/hugo_cicd_deploy/cicd_6.jpg" target="_blank" itemprop="contentUrl"></a>
+      <figcaption align="center">
+          <p>公開庫裡的檔案就是生成好的靜態內容</p>
+      </figcaption>
+  </figure>
+</div>
+
+<h3 id="大提醒">大提醒</h3>
+<p>推送前請先下 <code>hugo</code> 指令，依據程式碼生成最新的public，不然可能推好幾百次都覺得內容沒更新，那是當然的，因為public檔案依然是原先的舊檔案。</p>
+<blockquote>
+<p>以上，試了好幾次CICD設定都失敗，後來是找到這篇參考文章，才在嘗試後終於成功，特別感謝前人種樹</p>
+<ul>
+<li><a href="https://blog.euc-rt.me/post/github-actions-publish-private-hugo-repo-to-public-pages-site/">https://blog.euc-rt.me/post/github-actions-publish-private-hugo-repo-to-public-pages-site/</a></li>
+<li><a href="https://finisky.github.io/deployhugofromprivaterepo.en/">https://finisky.github.io/deployhugofromprivaterepo.en/</a></li>
+</ul>
+</blockquote>
 
 
                 
@@ -299,15 +387,10 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/post/vue_and_react/" data-toggle="tooltip" data-placement="top" title="【前端框架】Vue &amp; React 初開發比較與心得">&larr;
+                        <a href="/post/coding_now/" data-toggle="tooltip" data-placement="top" title="【以終為始】相信自己進步的力量！於是後來，我成為了前端工程師，但我想說更多的是，以前...">&larr;
                             Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/post/js_basic_2/" data-toggle="tooltip" data-placement="top" title="JS#2：JavaScript引擎與JavaScript的運行環境 ─ 什麼？JavaScript早就不只是直譯式語言了？！">Next
-                            Post &rarr;</a>
-                    </li>
                     
                 </ul>
                 

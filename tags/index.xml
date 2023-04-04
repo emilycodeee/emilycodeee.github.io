@@ -6,20 +6,20 @@
     <description>Recent content in Tags on Emily is coding</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-tw</language>
-    <lastBuildDate>Sat, 01 Apr 2023 11:29:38 +0000</lastBuildDate><atom:link href="https://emilycodeee.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 03 Apr 2023 11:29:38 +0000</lastBuildDate><atom:link href="https://emilycodeee.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>生活</title>
-      <link>https://emilycodeee.github.io/tags/%E7%94%9F%E6%B4%BB/</link>
-      <pubDate>Sat, 01 Apr 2023 11:29:38 +0000</pubDate>
+      <title>Hugo</title>
+      <link>https://emilycodeee.github.io/tags/hugo/</link>
+      <pubDate>Mon, 03 Apr 2023 11:29:38 +0000</pubDate>
       
-      <guid>https://emilycodeee.github.io/tags/%E7%94%9F%E6%B4%BB/</guid>
+      <guid>https://emilycodeee.github.io/tags/hugo/</guid>
       <description></description>
     </item>
     
     <item>
       <title>javascript</title>
       <link>https://emilycodeee.github.io/tags/javascript/</link>
-      <pubDate>Wed, 04 Jan 2023 21:26:41 +0000</pubDate>
+      <pubDate>Mon, 03 Apr 2023 11:29:38 +0000</pubDate>
       
       <guid>https://emilycodeee.github.io/tags/javascript/</guid>
       <description></description>
@@ -28,9 +28,18 @@
     <item>
       <title>前端</title>
       <link>https://emilycodeee.github.io/tags/%E5%89%8D%E7%AB%AF/</link>
-      <pubDate>Wed, 04 Jan 2023 21:26:41 +0000</pubDate>
+      <pubDate>Mon, 03 Apr 2023 11:29:38 +0000</pubDate>
       
       <guid>https://emilycodeee.github.io/tags/%E5%89%8D%E7%AB%AF/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>生活</title>
+      <link>https://emilycodeee.github.io/tags/%E7%94%9F%E6%B4%BB/</link>
+      <pubDate>Sat, 01 Apr 2023 11:29:38 +0000</pubDate>
+      
+      <guid>https://emilycodeee.github.io/tags/%E7%94%9F%E6%B4%BB/</guid>
       <description></description>
     </item>
     
@@ -49,6 +58,15 @@
       <pubDate>Sun, 27 Mar 2022 18:29:38 +0000</pubDate>
       
       <guid>https://emilycodeee.github.io/tags/vue/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>CI/CD</title>
+      <link>https://emilycodeee.github.io/tags/ci/cd/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://emilycodeee.github.io/tags/ci/cd/</guid>
       <description></description>
     </item>
     
